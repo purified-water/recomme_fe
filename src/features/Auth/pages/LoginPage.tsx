@@ -2,7 +2,7 @@ import { useState } from "react";
 import { MdOutlineVisibility, MdOutlineVisibilityOff } from "rocketicons/md";
 import { useNavigate } from "react-router-dom";
 import { authAPI } from "@/lib/api";
-// import LoginGoogle from "@/features/Auth/components/LoginGoogle";
+import LoginGoogle from "@/features/Auth/components/LoginGoogle";
 import Cookies from "js-cookie";
 import { jwtDecode, JwtPayload } from "jwt-decode";
 
@@ -41,6 +41,7 @@ export const LoginPage = () => {
     if (!inputValidation()) return;
 
     try {
+      console.log("Login info", loginInfo);
       const response = await authAPI.login(loginInfo.email, loginInfo.password);
 
       if (response.status === 200) {
@@ -74,7 +75,7 @@ export const LoginPage = () => {
 
   return (
     <div className="flex items-center justify-center h-screen bg-gray5">
-      <div className="w-full max-w-md p-8 bg-white shadow-lg rounded-lg">
+      <div className="w-full max-w-md p-8 bg-white rounded-lg shadow-lg">
         <div className="flex flex-col items-center mb-6">
           {/* <img src={intellab_bottom} alt="Intellab Logo" className="h-16 mb-2" /> */}
           <h1 className="text-2xl font-bold text-appPrimary">Log In</h1>
@@ -92,7 +93,7 @@ export const LoginPage = () => {
               onChange={(e) => setLoginInfo({ ...loginInfo, email: e.target.value })}
               onFocus={() => setInputErrors({ ...inputErrors, email: "" })}
               placeholder="Enter your email"
-              className="w-full px-4 py-2 mt-1 bg-white border shadow-sm rounded-lg focus:outline-none focus:ring-2 focus:ring-appPrimary"
+              className="w-full px-4 py-2 mt-1 bg-white border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-appPrimary"
             />
             {inputErrors.email && <p className="mt-2 text-sm text-appHard">{inputErrors.email}</p>}
           </div>
@@ -109,7 +110,7 @@ export const LoginPage = () => {
                 onChange={(e) => setLoginInfo({ ...loginInfo, password: e.target.value })}
                 onFocus={() => setInputErrors({ ...inputErrors, password: "" })}
                 placeholder="Enter your password"
-                className="w-full px-4 py-2 mt-1 bg-white border shadow-sm rounded-lg focus:outline-none focus:ring-2 focus:ring-appPrimary"
+                className="w-full px-4 py-2 mt-1 bg-white border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-appPrimary"
               />
               <button
                 type="button"
@@ -140,7 +141,7 @@ export const LoginPage = () => {
           </button>
         </form>
 
-        {/* <LoginGoogle /> */}
+        <LoginGoogle />
 
         <div className="mt-6 text-center">
           <div className="text-sm">

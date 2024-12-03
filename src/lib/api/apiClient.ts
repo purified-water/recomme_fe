@@ -2,7 +2,7 @@ import axios from "axios";
 import Cookies from "js-cookie";
 
 export const apiClient = axios.create({
-  baseURL: import.meta.env.VITE_SERVER_DOCKER_URL
+  baseURL: import.meta.env.VITE_SERVER_URL
 });
 
 // Add an interceptor to include the token in the Authorization header

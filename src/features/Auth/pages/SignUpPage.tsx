@@ -2,7 +2,7 @@ import { useState } from "react";
 import { MdOutlineVisibility, MdOutlineVisibilityOff } from "rocketicons/md";
 import { useNavigate } from "react-router-dom";
 import { authAPI } from "@/lib/api";
-// import LoginGoogle from "@/features/Auth/components/LoginGoogle";
+import LoginGoogle from "@/features/Auth/components/LoginGoogle";
 
 export const SignUpPage = () => {
   const [signUpInfo, setsignUpInfo] = useState({
@@ -83,7 +83,7 @@ export const SignUpPage = () => {
 
   return (
     <div className="flex items-center justify-center h-screen bg-gray5">
-      <div className="w-full max-w-md p-8 bg-white shadow-lg rounded-lg">
+      <div className="w-full max-w-md p-8 bg-white rounded-lg shadow-lg">
         <div className="flex flex-col items-center mb-6">
           {/* <img src={intellab_bottom} alt="Intellab Logo" className="h-16 mb-2" /> */}
           <h1 className="text-2xl font-bold text-appPrimary">Sign Up</h1>
@@ -101,7 +101,7 @@ export const SignUpPage = () => {
               onChange={(e) => setsignUpInfo({ ...signUpInfo, username: e.target.value })}
               onFocus={() => setInputErrors({ ...inputErrors, username: "" })}
               placeholder="Enter your username"
-              className="w-full px-4 py-2 mt-1 bg-white border shadow-sm rounded-lg focus:outline-none focus:ring-2 focus:ring-appPrimary"
+              className="w-full px-4 py-2 mt-1 bg-white border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-appPrimary"
             />
             {inputErrors.username && <p className="mt-2 text-sm text-appHard">{inputErrors.username}</p>}
           </div>
@@ -117,7 +117,7 @@ export const SignUpPage = () => {
               onChange={(e) => setsignUpInfo({ ...signUpInfo, email: e.target.value })}
               onFocus={() => setInputErrors({ ...inputErrors, email: "" })}
               placeholder="Enter your email"
-              className="w-full px-4 py-2 mt-1 bg-white border shadow-sm rounded-lg focus:outline-none focus:ring-2 focus:ring-appPrimary"
+              className="w-full px-4 py-2 mt-1 bg-white border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-appPrimary"
             />
             {inputErrors.email && <p className="mt-2 text-sm text-appHard">{inputErrors.email}</p>}
           </div>
@@ -134,7 +134,7 @@ export const SignUpPage = () => {
                 onChange={(e) => setsignUpInfo({ ...signUpInfo, password: e.target.value })}
                 onFocus={() => setInputErrors({ ...inputErrors, password: "" })}
                 placeholder="Enter your password"
-                className="w-full px-4 py-2 mt-1 bg-white border shadow-sm rounded-lg focus:outline-none focus:ring-2 focus:ring-appPrimary"
+                className="w-full px-4 py-2 mt-1 bg-white border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-appPrimary"
               />
               <button
                 type="button"
@@ -163,7 +163,7 @@ export const SignUpPage = () => {
                 onChange={(e) => setsignUpInfo({ ...signUpInfo, confirmPassword: e.target.value })}
                 onFocus={() => setInputErrors({ ...inputErrors, confirmPassword: "" })}
                 placeholder="Re-enter your password"
-                className="w-full px-4 py-2 mt-1 bg-white border shadow-sm rounded-lg focus:outline-none focus:ring-2 focus:ring-appPrimary"
+                className="w-full px-4 py-2 mt-1 bg-white border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-appPrimary"
               />
               <button
                 type="button"
@@ -188,7 +188,7 @@ export const SignUpPage = () => {
           </button>
         </form>
 
-        {/* <LoginGoogle /> */}
+        <LoginGoogle />
 
         <div className="mt-6 text-center">
           <p className="text-sm">
