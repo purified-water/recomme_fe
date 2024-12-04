@@ -35,42 +35,43 @@ export const LoginPage = () => {
   };
 
   const handleLogin = async (e: React.FormEvent) => {
-    // Add preventDefault first so the page doesnt reload when the form is submitted
     e.preventDefault();
-
+  
     if (!inputValidation()) return;
-
+  
     try {
       const response = await authAPI.login(loginInfo.email, loginInfo.password);
-
+  
       if (response.status === 200) {
         Cookies.set("accessToken", response.data.accessToken, {
-          // process.env.NODE_ENV is automatically set by Vite development/production
-          // if production, will use HTTPS and secure cookie
           secure: process.env.NODE_ENV === "production",
-          sameSite: "Strict", // Mitigate CSRF
-          expires: 1 / 24 // Token expiry (1 hour)
+          sameSite: "Strict",
+          expires: 1 / 24,
         });
-
+  
         const decodedToken = jwtDecode<JwtPayload>(response.data.accessToken);
-        const userId = decodedToken.sub; // sub is the user id
-
+        const userId = decodedToken.sub;
+  
         if (!userId) {
-          throw new Error("User id not found in token");
+          throw new Error("User ID not found in token");
         }
-
+  
         localStorage.setItem("userId", userId);
-
         navigate("/");
-      } else {
-        // TODO Handle errors
-        setInputErrors({ ...inputErrors, email: "Invalid email or password" });
       }
-    } catch (error) {
-      setInputErrors({ ...inputErrors, email: "Something wrong happened!" });
-      console.log("Login error", error);
+    } catch (error: any) {
+      // Handle Axios errors specifically
+      if (error.response) {
+        const errorMessage = error.response.data.message || "Invalid email or password";
+        setInputErrors({ ...inputErrors, email: errorMessage });
+      } else {
+        // For other errors (network issues, etc.)
+        setInputErrors({ ...inputErrors, email: "Something went wrong!" });
+      }
+      console.error("Login error", error);
     }
   };
+  
 
   return (
     <div className="flex items-center justify-center h-screen bg-gray5">

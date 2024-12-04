@@ -75,9 +75,16 @@ export const SignUpPage = () => {
         // TODO Handle errors
         setInputErrors({ ...inputErrors, username: "Unable to sign up" });
       }
-    } catch (error) {
-      setInputErrors({ ...inputErrors, username: "Something wrong happened!" });
-      console.log("Sign up error", error);
+    } catch (error: any) {
+      // Handle Axios errors specifically
+      if (error.response) {
+        const errorMessage = error.response.data.message || "Invalid email or password";
+        setInputErrors({ ...inputErrors, username: errorMessage });
+      } else {
+        // For other errors (network issues, etc.)
+        setInputErrors({ ...inputErrors, username: "Something went wrong!" });
+      }
+      console.error("Login error", error);
     }
   };
 
