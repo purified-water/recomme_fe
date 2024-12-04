@@ -13,7 +13,6 @@ const GoogleLogin = () => {
     try {
       const result = await signInWithPopup(auth, googleProvider);
       const idToken = await result.user.getIdToken();
-      console.log(idToken);
       const response = await authAPI.continueWithGoogle(idToken);
 
       if (response.status === 200 || response.status === 201) {

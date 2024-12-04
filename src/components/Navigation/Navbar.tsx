@@ -80,25 +80,25 @@ export const Navbar = () => {
               <MdClose className="icon-lg icon-gray3" />
             </button>
             <Link
-              to="/movies"
+              to="#"
               className={`text-lg font-semibold transition-colors hover:text-appAccent ${isActive("/movies")}`}
               onClick={() => setIsMenuOpen(false)}
             >
-              Explore
+              Movies
             </Link>
             <Link
-              to="/books"
+              to="#"
               className={`text-lg font-semibold transition-colors hover:text-appAccent ${isActive("/books")}`}
               onClick={() => setIsMenuOpen(false)}
             >
-              Problems
+              Books
             </Link>
             <Link
-              to="/favorites"
+              to="#"
               className={`text-lg font-semibold transition-colors hover:text-appAccent ${isActive("/favorites")}`}
               onClick={() => setIsMenuOpen(false)}
             >
-              Community
+              Favorites
             </Link>
           </div>
         </div>

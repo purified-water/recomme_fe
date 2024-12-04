@@ -41,7 +41,6 @@ export const LoginPage = () => {
     if (!inputValidation()) return;
 
     try {
-      console.log("Login info", loginInfo);
       const response = await authAPI.login(loginInfo.email, loginInfo.password);
 
       if (response.status === 200) {
