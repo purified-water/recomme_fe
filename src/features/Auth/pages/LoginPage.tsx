@@ -36,26 +36,26 @@ export const LoginPage = () => {
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-  
+
     if (!inputValidation()) return;
-  
+
     try {
       const response = await authAPI.login(loginInfo.email, loginInfo.password);
-  
+
       if (response.status === 200) {
         Cookies.set("accessToken", response.data.accessToken, {
           secure: process.env.NODE_ENV === "production",
           sameSite: "Strict",
-          expires: 1 / 24,
+          expires: 1 / 24
         });
-  
+
         const decodedToken = jwtDecode<JwtPayload>(response.data.accessToken);
         const userId = decodedToken.sub;
-  
+
         if (!userId) {
           throw new Error("User ID not found in token");
         }
-  
+
         localStorage.setItem("userId", userId);
         navigate("/");
       }
@@ -71,7 +71,6 @@ export const LoginPage = () => {
       console.error("Login error", error);
     }
   };
-  
 
   return (
     <div className="flex items-center justify-center h-screen bg-gray5">

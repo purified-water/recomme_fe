@@ -6,9 +6,10 @@ export default {
   theme: {
     extend: {
       colors: {
-        appPrimary: "#5a3295",
-        appSecondary: "#31259d",
-        appAccent: "#e75a76",
+        appPrimary: "#F0544F",
+        appSecondary: "#d81e5b",
+        appTertiary: "#c6d8d3",
+        appAccent: "#fdf0d5",
         appEasy: "#27AE60",
         appMedium: "#E2B93B",
         appHard: "#EB5757",
@@ -17,7 +18,7 @@ export default {
         appFadedPrimary: "#D8B3F2",
         appFadedAccent: "#FFD5DE",
 
-        gray1: "#333333",
+        gray1: "#3a3335",
         gray2: "#4F4F4F",
         gray3: "#828282",
         gray4: "#BDBDBD",

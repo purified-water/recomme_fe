@@ -4,4 +4,4 @@ export type UserProfile = {
   displayName: string | null;
   phoneNumber: string | null;
   photoUrl: string | null;
-}
+};

@@ -1,10 +1,10 @@
-import { useEffect, useState } from 'react';
-import { profileAPI } from '@/lib/api/profileApi';
-import { UserProfile } from '@/types/UserProfileType';
+import { useEffect, useState } from "react";
+import { profileAPI } from "@/lib/api/profileApi";
+import { UserProfile } from "@/types/UserProfileType";
 
 export const ProfilePage = () => {
   const [profile, setProfile] = useState<UserProfile | null>(null);
-  const userId = localStorage.getItem('userId');
+  const userId = localStorage.getItem("userId");
 
   useEffect(() => {
     if (!userId) {

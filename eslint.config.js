@@ -19,7 +19,7 @@ export default [
     },
   },
   {
-    ignores: ['vite.config.ts', 'tailwind.config.js', 'postcss.config.js', 'eslint.config.js'],
+    ignores: ['vite.config.ts', 'tailwind.config.js', 'postcss.config.js', 'eslint.config.js', 'dist/**/*', 'node_modules/**/*'],
   },
   { languageOptions: { globals: globals.browser } },
   pluginJs.configs.recommended,
@@ -27,6 +27,7 @@ export default [
   pluginReact.configs.flat.recommended,
   {
     rules: {
+      "react/prop-types": "off",
       'react/react-in-jsx-scope': 'off',
       'react/jsx-uses-react': 'off',
       'react/no-unescaped-entities': 'off',

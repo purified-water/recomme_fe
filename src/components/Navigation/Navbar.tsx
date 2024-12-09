@@ -73,8 +73,9 @@ export const Navbar = () => {
           </Link>
 
           <div
-            className={`fixed inset-0 z-40 flex flex-col items-center justify-center bg-white space-y-6 text-gray5 lg:static lg:flex lg:flex-row lg:space-y-0 lg:space-x-6 lg:bg-transparent lg:w-auto ${isMenuOpen ? "flex" : "hidden"
-              }`}
+            className={`fixed inset-0 z-40 flex flex-col items-center justify-center bg-white space-y-6 text-gray5 lg:static lg:flex lg:flex-row lg:space-y-0 lg:space-x-6 lg:bg-transparent lg:w-auto ${
+              isMenuOpen ? "flex" : "hidden"
+            }`}
           >
             <button onClick={() => setIsMenuOpen(false)} className="absolute top-3 right-3 lg:hidden">
               <MdClose className="icon-lg icon-gray3" />
