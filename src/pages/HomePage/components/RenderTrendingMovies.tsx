@@ -1,6 +1,6 @@
 import default_poster from "@/assets/Homepage/poster.jpg";
 import { MovieCard } from "../../../components/Movies/MovieCard";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 
 interface TrendingMoviesProps {
   time_window: string;

@@ -1,11 +1,11 @@
 import { SearchBar } from "../components/SearchBar";
-import { useSearchParams } from "react-router-dom";
+// import { useSearchParams } from "react-router-dom";
 import default_poster from "@/assets/Homepage/poster.jpg";
 import { MovieCardLong } from "../components/MovieCardLong";
 
 export const SearchResult = () => {
-  const [searchParams] = useSearchParams();
-  const query = searchParams.get("query");
+  // const [searchParams] = useSearchParams();
+  // const query = searchParams.get("query");
 
   const trendingMoviesList = [
     {
