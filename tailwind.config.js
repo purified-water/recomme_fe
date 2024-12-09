@@ -1,4 +1,4 @@
-const icons = require("rocketicons/tailwind");
+import icons from "rocketicons/tailwind";
 
 /** @type {import('tailwindcss').Config} */
 export default {
