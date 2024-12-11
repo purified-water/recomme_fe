@@ -1,37 +1,94 @@
-import default_poster from "@/assets/Homepage/poster.jpg";
-import default_backdrop from "@/assets/Homepage/backdrop.jpeg";
+import unavailable_image from "@/assets/unavailable_image.jpg";
+import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { movieApi } from "@/lib/api/movieApi";
+import { MovieDetailType } from "@/types/MovieDetailType";
 
 export const MovieDetail = () => {
+  const { movieId } = useParams<{ movieId: string }>();
+  const [movie, setMovie] = useState<MovieDetailType>();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const IMAGE_URL = import.meta.env.VITE_TMDB_IMAGE_URL;
+
+  if (!movieId) {
+    return <div>Movie info not found</div>;
+  }
+
+  const fetchMovieDetails = async () => {
+    setIsLoading(true);
+    try {
+      const response = await movieApi.getMovieDetails(parseInt(movieId, 10));
+      const data = response.data;
+      const normalizedMovie = {
+        ...data.result,
+        poster_path: data.result.poster_path ? `${IMAGE_URL}${data.result.poster_path}` : null,
+        backdrop_path: data.result.backdrop_path ? `${IMAGE_URL}${data.result.backdrop_path}` : null
+      };
+
+      setMovie(normalizedMovie);
+    } catch (error) {
+      console.error("Error fetching movie details:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchMovieDetails();
+  }, [movieId]);
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <div className="min-h-screen">
       <div className="relative">
         {/* Backdrop Image */}
         <div className="h-[400px]">
-          <img src={default_backdrop} alt="Backdrop" className="object-cover w-full h-full" />
+          {movie?.backdrop_path ? (
+            <img src={movie.backdrop_path} alt={movie.title} className="object-cover w-full h-full" />
+          ) : (
+            <div className="absolute inset-0 bg-gradient-to-t from-gray1 to-transparent" />
+          )}
         </div>
 
         {/* Content Overlay */}
-        <div className="absolute top-0 flex flex-col items-center gap-8 p-8 mx-auto bg-gradient-to-t from-slate-100 via-slate-100/90 to-slate-50/50 lg:flex-row lg:items-start">
+        <div className="absolute top-0 flex flex-col items-center w-full gap-8 p-8 mx-auto bg-gradient-to-t from-slate-100 via-slate-100/90 to-slate-50/50 lg:flex-row lg:items-start">
           <div className="w-64 overflow-hidden rounded-lg shadow-lg h-96">
-            <img src={default_poster} alt="The Boy and the Heron" className="object-cover w-full h-full" />
+            <img
+              src={movie?.poster_path || unavailable_image}
+              alt={movie?.title}
+              className="object-cover w-full h-full"
+            />
           </div>
 
           {/* Movie Info */}
           <div className="flex-1 text-gray-800">
             <h1 className="text-3xl font-bold">
-              The Boy and the Heron <span className="text-2xl font-normal">(2023)</span>
+              {movie?.title} <span className="text-2xl font-normal">({movie?.release_date.split("-")[0]})</span>
             </h1>
-            <p className="mt-2 text-sm text-gray-600">
-              G • 12/15/2023 (VN) • Animation, Adventure, Fantasy, Family, Drama • 2h 4m
-            </p>
+            <div className="flex mt-2 text-sm text-gray-600">
+              <div>
+                {movie?.original_language} • {movie?.release_date} •{" "}
+              </div>
+              <div>
+                {movie?.genres.map((genre) => (
+                  <span key={genre.id} className="ml-2">
+                    {genre.name}
+                  </span>
+                ))}
+              </div>
+              <div className="ml-2">• {movie?.runtime} mins</div>
+            </div>
 
             {/* User Score and Actions */}
             <div className="flex items-center gap-4 mt-4">
               <div className="flex items-center gap-2">
                 <div className="flex items-center justify-center w-12 h-12 text-sm font-bold text-white rounded-full bg-gradient-to-tr from-appPrimary to-purple-400">
-                  75%
+                  {movie?.vote_average.toFixed(1)}
                 </div>
-                <span className="text-sm font-medium">User Score</span>
+                <span className="text-sm font-medium">Average Vote</span>
               </div>
             </div>
 
@@ -50,24 +107,24 @@ export const MovieDetail = () => {
             </div>
 
             {/* Tagline */}
-            <p className="mt-6 italic text-gray-500">Where death comes to an end, life finds a new beginning.</p>
+            <p className="mt-6 italic text-gray-500">{movie?.tagline || "N/A"}</p>
 
             {/* Overview */}
             <div className="mt-4">
               <h2 className="text-xl font-semibold">Overview</h2>
-              <p className="mt-2 text-sm line-clamp-3">
-                While the Second World War rages, the teenage Mahito, haunted by his mother's tragic death, is relocated
-                from Tokyo to the serene rural home of his new stepmother Natsuko, a woman who bears a striking
-                resemblance to the boy's mother. As he tries to adjust, this strange new world grows even stranger
-                following the appearance of a persistent gray heron, who perplexes and bedevils Mahito, dubbing him the
-                "long-awaited one."
-              </p>
+              <p className="mt-2 text-sm line-clamp-3">{movie?.overview}</p>
             </div>
 
             {/* Director Info */}
             <div className="mt-4">
-              <h3 className="font-bold">Hayao Miyazaki</h3>
-              <p className="text-sm text-gray-600">Director, Writer</p>
+              <p className="text-xl font-semibold">Produced by</p>
+              <div className="flex gap-x-3">
+                {movie?.production_companies.map((company) => (
+                  <h3 key={company.id} className="text-sm text-gray4">
+                    {company.name}
+                  </h3>
+                ))}
+              </div>
             </div>
           </div>
         </div>

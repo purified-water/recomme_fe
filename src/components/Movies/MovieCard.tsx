@@ -1,6 +1,7 @@
 import { Movie } from "@/types/MovieType";
 import { TbDots } from "rocketicons/tb";
 import { Link, useNavigate } from "react-router-dom";
+import unavailable_image from "@/assets/unavailable_image.jpg";
 
 interface MovieCardProps {
   movie: Movie;
@@ -8,14 +9,17 @@ interface MovieCardProps {
 
 export const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
   const navigate = useNavigate();
+  console.log("MovieCard:", movie);
+
   const handleMovieClick = () => {
     navigate(`/movie/${movie.id}`);
   };
+
   return (
     <div className="relative flex flex-col items-center w-48 p-2 bg-white shadow-md h-72 rounded-xl shrink-0 hover:cursor-pointer">
       <div className="relative w-full overflow-hidden rounded-t-lg h-5/6">
         <img
-          src={movie.backdrop_path}
+          src={movie.backdrop_path || unavailable_image}
           alt={movie.title}
           className="object-cover w-full h-full"
           onClick={handleMovieClick}
@@ -36,7 +40,7 @@ export const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
       </div>
 
       <div className="absolute flex items-center justify-center w-10 h-10 text-xs font-bold text-white bg-black border-2 rounded-full border-appMedium top-2 -bottom-3 left-3">
-        {movie.popularity.toFixed(1)}
+        {movie.vote_average.toFixed(1)}
       </div>
     </div>
   );

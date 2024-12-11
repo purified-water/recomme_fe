@@ -5,9 +5,10 @@ import { HomePage } from "@/pages/HomePage/pages/HomePage";
 import { Navbar } from "@/components/Navigation/Navbar";
 import { LoginPage } from "@/features/Auth/pages/LoginPage";
 import { SignUpPage } from "@/features/Auth/pages/SignUpPage";
-import { ProfilePage } from "./pages/ProfilePage";
+import { ProfilePage } from "@/pages/ProfilePage";
 import { MovieDetail } from "@/features/MovieDetails/pages/MovieDetail";
 import { SearchResult } from "@/features/Search/pages/SearchResult";
+import { NotFoundPage } from "@/pages/NotFoundPage";
 import Cookies from "js-cookie";
 
 // Layout component to include conditional Navbar
@@ -61,12 +62,16 @@ const router = createBrowserRouter([
         )
       },
       {
-        path: "/movie/:id",
+        path: "/movie/:movieId",
         element: <MovieDetail />
       },
       {
         path: "/search",
         element: <SearchResult />
+      },
+      {
+        path: "/*",
+        element: <NotFoundPage />
       }
     ]
   }

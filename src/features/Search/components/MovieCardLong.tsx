@@ -1,5 +1,6 @@
 import { Movie } from "@/types/MovieType";
 import { Link, useNavigate } from "react-router-dom";
+import unavailable_image from "@/assets/unavailable_image.jpg";
 
 interface MovieCardProps {
   movie: Movie;
@@ -14,7 +15,7 @@ export const MovieCardLong: React.FC<MovieCardProps> = ({ movie }) => {
     <div className="flex items-center w-full bg-white shadow-md h-36 rounded-xl shrink-0 hover:cursor-pointer gap-x-4">
       <div className="relative w-24 h-full overflow-hidden rounded-lg">
         <img
-          src={movie.backdrop_path}
+          src={movie.backdrop_path || unavailable_image}
           alt={movie.title}
           className="object-cover w-full h-full"
           onClick={handleMovieClick}
@@ -26,10 +27,7 @@ export const MovieCardLong: React.FC<MovieCardProps> = ({ movie }) => {
           <h2 className="text-base font-semibold">{movie.title}</h2>
         </Link>
         <p className="text-base font-light text-gray-500">{new Date(movie.release_date).toDateString()}</p>
-        <div className="self-baseline line-clamp-2">
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Fuga fugit velit incidunt quaerat. Voluptas minima
-          eum blanditiis optio
-        </div>
+        <div className="self-baseline line-clamp-2">{movie.overview}</div>
       </div>
     </div>
   );

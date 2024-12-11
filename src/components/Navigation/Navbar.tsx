@@ -124,8 +124,7 @@ export const Navbar = () => {
                     <MdAccountCircle className="icon-3xl" />
 
                     <div className="flex flex-col px-4 py-2">
-                      <div className="text-lg font-semibold">Username</div>
-                      <div className="text-sm text-gray-500">100 points</div>
+                      <div className="text-lg font-semibold">User</div>
                     </div>
                   </div>
 
