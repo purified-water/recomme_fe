@@ -5,9 +5,32 @@ import { useNavigate } from "react-router-dom";
 import { authAPI } from "@/lib/api";
 import Cookies from "js-cookie";
 import { jwtDecode, JwtPayload } from "jwt-decode";
+import { useUserStore } from "@/stores/userStore";
+import { userAPI } from "@/lib/api/userApi";
 
 const GoogleLogin = () => {
   const navigate = useNavigate();
+
+  const fetchUserProfile = async (userId: string) => {
+    try {
+      const response = await userAPI.getProfile(userId);
+      const userData = response.data;
+      let { email, displayName, phoneNumber, photoUrl } = userData;
+
+      if (!displayName) {
+        displayName = email.split("@")[0];
+      }
+
+      useUserStore.setState({
+        email,
+        displayName,
+        phoneNumber,
+        photoUrl: photoUrl
+      });
+    } catch (error) {
+      console.error("Fetch user profile error", error);
+    }
+  }
 
   const handleGoogleLogin = async () => {
     try {
@@ -23,7 +46,9 @@ const GoogleLogin = () => {
         if (!userId) {
           throw new Error("User id not found in token");
         }
-
+        // Fetch user profile and store in zustand
+        await fetchUserProfile(userId);
+        
         localStorage.setItem("userId", userId);
 
         navigate("/");

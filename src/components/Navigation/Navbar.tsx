@@ -10,6 +10,7 @@ import {
   MdLogout
 } from "rocketicons/md";
 import Cookies from "js-cookie";
+import { useUserStore } from "@/stores/userStore";
 
 export const Navbar = () => {
   const location = useLocation();
@@ -18,6 +19,7 @@ export const Navbar = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const profileIconRef = useRef<HTMLDivElement>(null);
+  const displayName = useUserStore((state) => state.displayName);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -73,9 +75,8 @@ export const Navbar = () => {
           </Link>
 
           <div
-            className={`fixed inset-0 z-40 flex flex-col items-center justify-center bg-white space-y-6 text-gray5 lg:static lg:flex lg:flex-row lg:space-y-0 lg:space-x-6 lg:bg-transparent lg:w-auto ${
-              isMenuOpen ? "flex" : "hidden"
-            }`}
+            className={`fixed inset-0 z-40 flex flex-col items-center justify-center bg-white space-y-6 text-gray5 lg:static lg:flex lg:flex-row lg:space-y-0 lg:space-x-6 lg:bg-transparent lg:w-auto ${isMenuOpen ? "flex" : "hidden"
+              }`}
           >
             <button onClick={() => setIsMenuOpen(false)} className="absolute top-3 right-3 lg:hidden">
               <MdClose className="icon-lg icon-gray3" />
@@ -120,12 +121,9 @@ export const Navbar = () => {
                   ref={dropdownRef}
                   className="absolute right-0 z-10 w-56 mt-2 bg-white rounded-lg shadow-md top-10"
                 >
-                  <div className="flex flex-row items-center px-3">
+                  <div className="flex flex-row items-center px-3 py-1 gap-x-2">
                     <MdAccountCircle className="icon-3xl" />
-
-                    <div className="flex flex-col px-4 py-2">
-                      <div className="text-lg font-semibold">User</div>
-                    </div>
+                    <div className="text-lg font-semibold">{displayName ? displayName : "User"}</div>
                   </div>
 
                   <hr className="border-gray5" />

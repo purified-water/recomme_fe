@@ -5,6 +5,8 @@ import { authAPI } from "@/lib/api";
 import LoginGoogle from "@/features/Auth/components/LoginGoogle";
 import Cookies from "js-cookie";
 import { jwtDecode, JwtPayload } from "jwt-decode";
+import { useUserStore } from "@/stores/userStore";
+import { userAPI } from "@/lib/api/userApi";
 
 export const LoginPage = () => {
   const [loginInfo, setLoginInfo] = useState({ email: "", password: "" });
@@ -34,6 +36,27 @@ export const LoginPage = () => {
     return isValid;
   };
 
+  const fetchUserProfile = async (userId: string) => {
+    try {
+      const response = await userAPI.getProfile(userId);
+      const userData = response.data;
+      let { email, displayName, phoneNumber, photoUrl } = userData;
+
+      if (!displayName) {
+        displayName = email.split("@")[0];
+      }
+
+      useUserStore.setState({
+        email,
+        displayName,
+        phoneNumber,
+        photoUrl: photoUrl
+      });
+    } catch (error) {
+      console.error("Fetch user profile error", error);
+    }
+  }
+
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -55,6 +78,8 @@ export const LoginPage = () => {
         if (!userId) {
           throw new Error("User ID not found in token");
         }
+        // Fetch user info and store in global state
+        await fetchUserProfile(userId);
 
         localStorage.setItem("userId", userId);
         navigate("/");
