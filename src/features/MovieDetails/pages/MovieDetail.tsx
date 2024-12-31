@@ -1,8 +1,10 @@
-import unavailable_image from "@/assets/unavailable_image.jpg";
+import UNAVAILABLE_IMAGE from "@/assets/UNAVAILABLE_IMAGE.jpg";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { movieApi } from "@/lib/api/movieApi";
 import { MovieDetailType } from "@/types/MovieDetailType";
+import { AppFooter } from "@/components/AppFooter";
+import { ActionButtons } from "../components/ActionButtons";
 
 export const MovieDetail = () => {
   const { movieId } = useParams<{ movieId: string }>();
@@ -45,19 +47,19 @@ export const MovieDetail = () => {
     <div className="min-h-screen">
       <div className="relative">
         {/* Backdrop Image */}
-        <div className="h-[400px]">
+        <div className="min-h-[400px] max-h-[430px] overflow-hidden">
           {movie?.backdrop_path ? (
             <img src={movie.backdrop_path} alt={movie.title} className="object-cover w-full h-full" />
           ) : (
-            <div className="absolute inset-0 bg-gradient-to-t from-gray1 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-gray1 to-black" />
           )}
         </div>
 
         {/* Content Overlay */}
-        <div className="absolute top-0 flex flex-col items-center w-full gap-8 p-8 mx-auto bg-gradient-to-t from-slate-100 via-slate-100/90 to-slate-50/50 lg:flex-row lg:items-start">
+        <div className="absolute top-0 flex flex-col items-center w-full gap-8 p-8 mx-auto bg-gradient-to-t from-gray3 via-gray2/80 to-gray2/90 lg:flex-row lg:items-start">
           <div className="w-64 overflow-hidden rounded-lg shadow-lg h-96">
             <img
-              src={movie?.poster_path || unavailable_image}
+              src={movie?.poster_path || UNAVAILABLE_IMAGE}
               alt={movie?.title}
               className="object-cover w-full h-full"
             />
@@ -65,10 +67,10 @@ export const MovieDetail = () => {
 
           {/* Movie Info */}
           <div className="flex-1 text-gray-800">
-            <h1 className="text-3xl font-bold">
+            <h1 className="text-3xl font-bold text-white">
               {movie?.title} <span className="text-2xl font-normal">({movie?.release_date.split("-")[0]})</span>
             </h1>
-            <div className="flex mt-2 text-sm text-gray-600">
+            <div className="flex mt-2 text-sm text-gray6">
               <div>
                 {movie?.original_language} • {movie?.release_date} •{" "}
               </div>
@@ -83,40 +85,31 @@ export const MovieDetail = () => {
             </div>
 
             {/* User Score and Actions */}
-            <div className="flex items-center gap-4 mt-4">
+            <div className="flex items-center gap-4 mt-4 text-white">
               <div className="flex items-center gap-2">
                 <div className="flex items-center justify-center w-12 h-12 text-sm font-bold text-white rounded-full bg-gradient-to-tr from-appPrimary to-purple-400">
                   {movie?.vote_average.toFixed(1)}
                 </div>
-                <span className="text-sm font-medium">Average Vote</span>
+                <span className="text-sm font-medium">Average Rating</span>
               </div>
             </div>
 
             {/* Action Icons */}
             <div className="flex items-center gap-4 mt-6">
-              <button className="flex items-center justify-center w-10 h-10 bg-gray-200 rounded-full">
-                <span className="text-lg">☰</span>
-              </button>
-              <button className="flex items-center justify-center w-10 h-10 bg-gray-200 rounded-full">
-                <span className="text-lg">❤</span>
-              </button>
-              <button className="flex items-center justify-center w-10 h-10 bg-gray-200 rounded-full">
-                <span className="text-lg">🔖</span>
-              </button>
-              <button className="px-4 py-2 text-sm text-white rounded-lg bg-gray1">▶ Play Trailer</button>
+              <ActionButtons />
             </div>
 
             {/* Tagline */}
-            <p className="mt-6 italic text-gray-500">{movie?.tagline || "N/A"}</p>
+            <p className="mt-6 italic text-gray6">{movie?.tagline || "N/A"}</p>
 
             {/* Overview */}
-            <div className="mt-4">
+            <div className="mt-4 text-white">
               <h2 className="text-xl font-semibold">Overview</h2>
               <p className="mt-2 text-sm line-clamp-3">{movie?.overview}</p>
             </div>
 
             {/* Director Info */}
-            <div className="mt-4">
+            <div className="mt-4 text-white">
               <p className="text-xl font-semibold">Produced by</p>
               <div className="flex gap-x-3">
                 {movie?.production_companies.map((company) => (
@@ -129,6 +122,7 @@ export const MovieDetail = () => {
           </div>
         </div>
       </div>
+      <AppFooter />
     </div>
   );
 };

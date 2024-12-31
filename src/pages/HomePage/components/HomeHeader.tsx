@@ -19,7 +19,7 @@ export const HomeHeader = () => {
 
       <div className="relative flex flex-col justify-start h-full px-12 pt-12 text-white">
         <h1 className="text-4xl font-bold text-white">Welcome to RecomMe</h1>
-        <p className="text-lg font-semibold text-white">Millions of movies and books to discover. Explore now.</p>
+        <p className="text-lg font-semibold text-white">Millions of movies to discover. Explore now.</p>
       </div>
 
       <div className="absolute bottom-0 right-0 flex justify-center p-6 mb-4 left-1">

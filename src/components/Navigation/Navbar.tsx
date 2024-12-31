@@ -83,11 +83,11 @@ export const Navbar = () => {
               Movies
             </Link>
             <Link
-              to="#"
+              to="/recommendation"
               className={`text-lg font-semibold transition-colors hover:text-appSecondary ${isActive("/recommend")}`}
               onClick={() => setIsMenuOpen(false)}
             >
-              Recommend
+              Recommendation
             </Link>
           </div>
         </div>
