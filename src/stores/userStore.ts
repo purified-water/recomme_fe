@@ -7,7 +7,7 @@ type UserStore = {
   emailVerified: boolean;
   phoneNumber: string;
   photoUrl: string;
-}
+};
 
 export const useUserStore = create<UserStore>(() => ({
   uid: "",
@@ -15,5 +15,5 @@ export const useUserStore = create<UserStore>(() => ({
   displayName: "",
   emailVerified: false,
   phoneNumber: "",
-  photoUrl: "",
+  photoUrl: ""
 }));

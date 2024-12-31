@@ -1,14 +1,7 @@
 import { Link, useLocation } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
-import {
-  MdAccountCircle,
-  MdClose,
-  MdMenu,
-  MdOutlinePerson,
-  MdOutlineSettings,
-  MdOutlineWbSunny,
-  MdLogout
-} from "rocketicons/md";
+import { TbBook } from "rocketicons/tb";
+import { MdAccountCircle, MdClose, MdMenu, MdOutlinePerson, MdLogout, MdStarRate, MdMovie } from "rocketicons/md";
 import Cookies from "js-cookie";
 import { useUserStore } from "@/stores/userStore";
 
@@ -55,7 +48,7 @@ export const Navbar = () => {
     setIsLoggedIn(false);
   };
 
-  const isActive = (path: string) => (location.pathname === path ? "text-appAccent font-bold" : "text-gray3");
+  const isActive = (path: string) => (location.pathname === path ? "text-appSecondary font-bold" : "text-gray3");
 
   return (
     <>
@@ -75,32 +68,26 @@ export const Navbar = () => {
           </Link>
 
           <div
-            className={`fixed inset-0 z-40 flex flex-col items-center justify-center bg-white space-y-6 text-gray5 lg:static lg:flex lg:flex-row lg:space-y-0 lg:space-x-6 lg:bg-transparent lg:w-auto ${isMenuOpen ? "flex" : "hidden"
-              }`}
+            className={`fixed inset-0 z-40 flex flex-col items-center justify-center bg-white space-y-6 text-gray5 lg:static lg:flex lg:flex-row lg:space-y-0 lg:space-x-6 lg:bg-transparent lg:w-auto ${
+              isMenuOpen ? "flex" : "hidden"
+            }`}
           >
             <button onClick={() => setIsMenuOpen(false)} className="absolute top-3 right-3 lg:hidden">
               <MdClose className="icon-lg icon-gray3" />
             </button>
             <Link
-              to="#"
-              className={`text-lg font-semibold transition-colors hover:text-appAccent ${isActive("/movies")}`}
+              to="/movies"
+              className={`text-lg font-semibold transition-colors hover:text-appSecondary ${isActive("/movies")}`}
               onClick={() => setIsMenuOpen(false)}
             >
               Movies
             </Link>
             <Link
               to="#"
-              className={`text-lg font-semibold transition-colors hover:text-appAccent ${isActive("/books")}`}
+              className={`text-lg font-semibold transition-colors hover:text-appSecondary ${isActive("/recommend")}`}
               onClick={() => setIsMenuOpen(false)}
             >
-              Books
-            </Link>
-            <Link
-              to="#"
-              className={`text-lg font-semibold transition-colors hover:text-appAccent ${isActive("/favorites")}`}
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Favorites
+              Recommend
             </Link>
           </div>
         </div>
@@ -119,7 +106,7 @@ export const Navbar = () => {
                 <div
                   id="dropdown"
                   ref={dropdownRef}
-                  className="absolute right-0 z-10 w-56 mt-2 bg-white rounded-lg shadow-md top-10"
+                  className="absolute right-0 z-40 w-56 mt-2 bg-white border rounded-lg shadow-xl top-8"
                 >
                   <div className="flex flex-row items-center px-3 py-1 gap-x-2">
                     <MdAccountCircle className="icon-3xl" />
@@ -137,22 +124,34 @@ export const Navbar = () => {
                         </div>
                       </Link>
                     </li>
-                    <li className="px-4 py-2 text-gray3 hover:opacity-70">
-                      <Link to="/settings">
-                        <div className="flex items-center space-x-2">
-                          <MdOutlineSettings className="icon-lg icon-gray3" />
-                          <span>Settings</span>
-                        </div>
-                      </Link>
-                    </li>
+
                     <li className="px-4 py-2 text-gray3 hover:opacity-70">
                       <Link to="#">
                         <div className="flex items-center space-x-2">
-                          <MdOutlineWbSunny className="icon-lg icon-gray3" />
-                          <span>Light theme</span>
+                          <TbBook className="icon-lg icon-gray3" />
+                          <span>Lists</span>
                         </div>
                       </Link>
                     </li>
+
+                    <li className="px-4 py-2 text-gray3 hover:opacity-70">
+                      <Link to="#">
+                        <div className="flex items-center space-x-2">
+                          <MdStarRate className="icon-lg icon-gray3" />
+                          <span>Ratings</span>
+                        </div>
+                      </Link>
+                    </li>
+
+                    <li className="px-4 py-2 text-gray3 hover:opacity-70">
+                      <Link to="#">
+                        <div className="flex items-center space-x-2">
+                          <MdMovie className="icon-lg icon-gray3" />
+                          <span>Watchlist</span>
+                        </div>
+                      </Link>
+                    </li>
+
                     <li className="px-4 py-2 text-gray3 hover:opacity-70">
                       <div className="flex items-center space-x-2">
                         <MdLogout className="icon-lg icon-gray3" />

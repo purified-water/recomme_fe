@@ -9,12 +9,14 @@ import { ProfilePage } from "@/pages/ProfilePage";
 import { MovieDetail } from "@/features/MovieDetails/pages/MovieDetail";
 import { SearchResult } from "@/features/Search/pages/SearchResult";
 import { NotFoundPage } from "@/pages/NotFoundPage";
+import { ForgotPassword } from "@/features/Auth/pages/ForgotPassword";
+import { MoviesPage } from "@/pages/MoviesPage/pages/MoviesPage";
 import Cookies from "js-cookie";
 
 // Layout component to include conditional Navbar
 const Layout = () => {
   const location = useLocation();
-  const hideNavbar = ["/login", "/signup"].includes(location.pathname);
+  const hideNavbar = ["/login", "/signup", "/forgot-password"].includes(location.pathname);
 
   return (
     <>
@@ -54,12 +56,20 @@ const router = createBrowserRouter([
         element: <SignUpPage />
       },
       {
+        path: "/forgot-password",
+        element: <ForgotPassword />
+      },
+      {
         path: "/profile",
         element: (
           <ProtectedRoute>
             <ProfilePage />
           </ProtectedRoute>
         )
+      },
+      {
+        path: "/movies",
+        element: <MoviesPage />
       },
       {
         path: "/movie/:movieId",

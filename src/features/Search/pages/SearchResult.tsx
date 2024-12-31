@@ -5,6 +5,7 @@ import { MovieCardLong } from "../components/MovieCardLong";
 import { RenderPagination } from "../components/RenderPagination";
 import { movieApi } from "@/lib/api/movieApi";
 import { Movie } from "@/types/MovieType";
+import { SearchFilter } from "../components/SearchFilter";
 
 export const SearchResult = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -40,6 +41,10 @@ export const SearchResult = () => {
     }
   };
 
+  const updateResult = (filters: string) => {
+    console.log(filters);
+  };
+
   useEffect(() => {
     if (query) fetchMovies();
   }, [query, currentPage]);
@@ -58,12 +63,19 @@ export const SearchResult = () => {
     setSearchParams({ query, page: page.toString() });
   };
 
+  // TO DO: FIX THE SEARCH FILTER
   return (
     <div>
       <SearchBar />
       <div className="mx-6 mb-4 text-2xl font-bold text-appPrimary">Search Results</div>
-      <div className="flex flex-col mx-8 overflow-y-scroll gap-y-4">
-        <RenderSearchMovies />
+      <div className="flex mx-8 overflow-y-scroll gap-x-4">
+        <div className="flex-col w-1/5 filter-bar">
+          <SearchFilter updateResult={updateResult} />
+        </div>
+
+        <div className="flex-col w-4/5 min-h-screen filter-bar">
+          <RenderSearchMovies />
+        </div>
       </div>
       <RenderPagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />
     </div>

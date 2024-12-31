@@ -12,7 +12,7 @@ export const MovieCardLong: React.FC<MovieCardProps> = ({ movie }) => {
     navigate(`/movie/${movie.id}`);
   };
   return (
-    <div className="flex items-center w-full bg-white shadow-md h-36 rounded-xl shrink-0 hover:cursor-pointer gap-x-4">
+    <div className="flex items-center w-full mb-4 bg-white border shadow-md h-36 rounded-xl shrink-0 hover:cursor-pointer gap-x-4">
       <div className="relative w-24 h-full overflow-hidden rounded-lg">
         <img
           src={movie.backdrop_path || unavailable_image}

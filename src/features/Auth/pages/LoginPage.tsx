@@ -40,22 +40,22 @@ export const LoginPage = () => {
     try {
       const response = await userAPI.getProfile(userId);
       const userData = response.data;
-      let { email, displayName, phoneNumber, photoUrl } = userData;
+      const { email, displayName, phoneNumber, photoUrl } = userData;
 
       if (!displayName) {
-        displayName = email.split("@")[0];
+        userData.displayName = email.split("@")[0];
       }
 
       useUserStore.setState({
         email,
-        displayName,
+        displayName: userData.displayName,
         phoneNumber,
         photoUrl: photoUrl
       });
     } catch (error) {
       console.error("Fetch user profile error", error);
     }
-  }
+  };
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();

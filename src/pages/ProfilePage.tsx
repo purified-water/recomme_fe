@@ -19,7 +19,7 @@ export const ProfilePage = () => {
       try {
         const response = await userAPI.getProfile(userId);
         const data: UserProfile = await response.data;
-        
+
         if (!data.displayName) {
           data.displayName = displayName;
         }
@@ -53,9 +53,7 @@ export const ProfilePage = () => {
             <p className="text-white">
               <strong className="font-semibold">UID:</strong> {profile.uid || "N/A"}
             </p>
-            <div className="text-base text-white">
-              {profile.email || "N/A"}
-            </div>
+            <div className="text-base text-white">{profile.email || "N/A"}</div>
           </div>
         </div>
       </div>
