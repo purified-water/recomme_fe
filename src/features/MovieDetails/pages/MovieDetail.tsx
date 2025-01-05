@@ -5,10 +5,13 @@ import { movieApi } from "@/lib/api/movieApi";
 import { MovieDetailType } from "@/types/MovieDetailType";
 import { AppFooter } from "@/components/AppFooter";
 import { ActionButtons } from "../components/ActionButtons";
+import { FaStar } from "rocketicons/fa";
+import { RateMovieModal } from "../components/RateMovieModal";
 
 export const MovieDetail = () => {
   const { movieId } = useParams<{ movieId: string }>();
   const [movie, setMovie] = useState<MovieDetailType>();
+  const [isRatingModalOpen, setIsRatingModalOpen] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const IMAGE_URL = import.meta.env.VITE_TMDB_IMAGE_URL;
 
@@ -45,6 +48,14 @@ export const MovieDetail = () => {
 
   return (
     <div className="min-h-screen">
+      {/* Rate Movie Modal */}
+      {/* TO DO: ADD RATE MOVIE MODAL COMPONENT */}
+      <RateMovieModal
+        isOpen={isRatingModalOpen}
+        onClose={() => {
+          setIsRatingModalOpen(false);
+        }}
+      />
       <div className="relative">
         {/* Backdrop Image */}
         <div className="min-h-[400px] max-h-[430px] overflow-hidden">
@@ -91,6 +102,14 @@ export const MovieDetail = () => {
                   {movie?.vote_average.toFixed(1)}
                 </div>
                 <span className="text-sm font-medium">Average Rating</span>
+
+                <div
+                  onClick={() => setIsRatingModalOpen(true)}
+                  className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-white rounded-md cursor-pointer bg-gray1 hover:bg-gray2/70"
+                >
+                  <FaStar className="inline-block w-3 h-3 icon-white" />
+                  <div>Rate Movie</div>
+                </div>
               </div>
             </div>
 

@@ -4,40 +4,40 @@ import { SmallTrailerCard } from "@/components/Trailers/SmallTrailerCard";
 
 const MOCK_TRAILERS = [
   {
-    title: 'Mufasa: The Lion King',
-    description: '#1 Movie In America',
-    image: 'https://via.placeholder.com/400x200',
+    title: "Mufasa: The Lion King",
+    description: "#1 Movie In America",
+    image: "https://via.placeholder.com/400x200"
   },
   {
-    title: 'Sonic the Hedgehog 3',
-    description: 'Fasten your seat belts!',
-    image: 'https://via.placeholder.com/400x200',
+    title: "Sonic the Hedgehog 3",
+    description: "Fasten your seat belts!",
+    image: "https://via.placeholder.com/400x200"
   },
   {
-    title: 'Wicked',
-    description: 'Watch At Home on December 31',
-    image: 'https://via.placeholder.com/400x200',
+    title: "Wicked",
+    description: "Watch At Home on December 31",
+    image: "https://via.placeholder.com/400x200"
   },
   {
-    title: 'The Lord of the Rings: The War of the Rohirrim',
-    description: 'Now Playing only in Theaters',
-    image: 'https://via.placeholder.com/400x200',
+    title: "The Lord of the Rings: The War of the Rohirrim",
+    description: "Now Playing only in Theaters",
+    image: "https://via.placeholder.com/400x200"
   },
   {
-    title: 'The Lord of the Rings: The War of the Rohirrim',
-    description: 'Now Playing only in Theaters',
-    image: 'https://via.placeholder.com/400x200',
+    title: "The Lord of the Rings: The War of the Rohirrim",
+    description: "Now Playing only in Theaters",
+    image: "https://via.placeholder.com/400x200"
   },
   {
-    title: 'The Lord of the Rings: The War of the Rohirrim',
-    description: 'Now Playing only in Theaters',
-    image: 'https://via.placeholder.com/400x200',
+    title: "The Lord of the Rings: The War of the Rohirrim",
+    description: "Now Playing only in Theaters",
+    image: "https://via.placeholder.com/400x200"
   },
   {
-    title: 'The Lord of the Rings: The War of the Rohirrim',
-    description: 'Now Playing only in Theaters',
-    image: 'https://via.placeholder.com/400x200',
-  },
+    title: "The Lord of the Rings: The War of the Rohirrim",
+    description: "Now Playing only in Theaters",
+    image: "https://via.placeholder.com/400x200"
+  }
 ];
 
 interface TrailersProps {
@@ -72,9 +72,7 @@ export const RenderLatestTrailers = ({ trailerFilter }: TrailersProps) => {
   }, [trailerFilter]); // Re-run if trailerFilter changes
 
   const RenderTrailers = () => {
-    return trailers.map((trailer, index) => (
-      <SmallTrailerCard key={index} trailer={trailer} />
-    ));
+    return trailers.map((trailer, index) => <SmallTrailerCard key={index} trailer={trailer} />);
   };
 
   return (

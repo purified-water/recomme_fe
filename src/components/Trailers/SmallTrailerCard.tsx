@@ -1,28 +1,22 @@
-import { TrailerType } from '@/types/TrailerType'
+import { TrailerType } from "@/types/TrailerType";
 
 interface SmallTrailerCardProps {
-  trailer: TrailerType
+  trailer: TrailerType;
 }
 
-export const SmallTrailerCard = ({trailer}: SmallTrailerCardProps) => {
+export const SmallTrailerCard = ({ trailer }: SmallTrailerCardProps) => {
   const handleTrailerClick = () => {
-    console.log(trailer.title)
-  }
+    console.log(trailer.title);
+  };
 
   return (
     <div
       className="relative h-48 overflow-hidden transition-all duration-300 transform rounded-lg bg-gray6 w-80 group hover:scale-105 hover:rounded-lg hover:z-10 shrink-0"
       onClick={handleTrailerClick}
     >
-      <img
-        src={trailer.image}
-        alt={trailer.title}
-        className="object-cover w-full h-full"
-      />
+      <img src={trailer.image} alt={trailer.title} className="object-cover w-full h-full" />
       <div className="absolute inset-0 flex items-center justify-center transition-opacity bg-black bg-opacity-50 opacity-0 group-hover:opacity-100">
-        <button
-          className="z-30 flex items-center justify-center w-12 h-12 text-black bg-white rounded-full shadow-lg hover:bg-gray-200"
-        >
+        <button className="z-30 flex items-center justify-center w-12 h-12 text-black bg-white rounded-full shadow-lg hover:bg-gray-200">
           ▶
         </button>
       </div>
@@ -31,5 +25,5 @@ export const SmallTrailerCard = ({trailer}: SmallTrailerCardProps) => {
         <p className="text-sm text-gray-300">{trailer.description}</p>
       </div>
     </div>
-  )
-}
+  );
+};
