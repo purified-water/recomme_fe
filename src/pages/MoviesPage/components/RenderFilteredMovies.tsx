@@ -41,11 +41,11 @@ export const RenderFilteredMovies = ({ time_window }: TrendingMoviesProps) => {
   }
 
   return (
-    <div className="flex flex-wrap justify-center gap-x-2 gap-y-8">
+    <div className="flex flex-wrap gap-y-4 gap-x-6">
       {movies.map((movie, index) => (
-        <div key={index} className="flex-grow max-w-[250px]">
-          <MovieCard movie={movie} />
-        </div>
+        <>
+          <MovieCard movie={movie} key={index} />
+        </>
       ))}
     </div>
   );

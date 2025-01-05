@@ -14,7 +14,7 @@ export const MoviesPage = () => {
           <FilterSection onSearch={handleSearch} />
         </div>
 
-        <div className="flex w-4/5 min-h-screen filter-bar">
+        <div className="w-4/5">
           <RenderFilteredMovies time_window="day" />
         </div>
       </div>
