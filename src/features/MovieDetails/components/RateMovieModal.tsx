@@ -14,7 +14,7 @@ export const RateMovieModal = ({ isOpen, onClose }: RatingModalProps) => {
   if (!isOpen) return null;
 
   const handleSubmitRating = () => {
-    console.log("Rating submitted:", rating);
+    console.log("Rating submitted:", rating / 10);
     onClose();
   };
 

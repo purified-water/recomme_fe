@@ -7,6 +7,9 @@ import { AppFooter } from "@/components/AppFooter";
 import { ActionButtons } from "../components/ActionButtons";
 import { FaStar } from "rocketicons/fa";
 import { RateMovieModal } from "../components/RateMovieModal";
+import { RenderCast } from "../components/RenderCast";
+import { RenderReviews } from "../components/RenderReviews";
+import { RenderMoreDetail } from "../components/RenderMoreDetail";
 
 export const MovieDetail = () => {
   const { movieId } = useParams<{ movieId: string }>();
@@ -24,6 +27,7 @@ export const MovieDetail = () => {
     try {
       const response = await movieApi.getMovieDetails(parseInt(movieId, 10));
       const data = response.data;
+      console.log("Movie details:", data);
       const normalizedMovie = {
         ...data.result,
         poster_path: data.result.poster_path ? `${IMAGE_URL}${data.result.poster_path}` : null,
@@ -141,6 +145,17 @@ export const MovieDetail = () => {
           </div>
         </div>
       </div>
+      <div id="more_detail" className="flex gap-x-4">
+        <div className="w-[70%] ">
+          <RenderCast />
+          <RenderReviews />
+        </div>
+
+        <div className="w-[30%]">
+          <RenderMoreDetail movie={movie} />
+        </div>
+      </div>
+
       <AppFooter />
     </div>
   );

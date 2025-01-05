@@ -9,6 +9,7 @@ export type MovieDetailType = {
   original_language: string;
   original_title: string;
   overview: string;
+  homepage: string | null;
   popularity: number; // Defaults to 0
   poster_path: string | null;
   production_companies: Array<{
