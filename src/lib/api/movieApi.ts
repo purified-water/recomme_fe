@@ -7,8 +7,8 @@ export const movieApi = {
   getPopularMovies: async (page: number = 1) => {
     return apiClient.get(`/api/movies/popular?page=${page}`);
   },
-  searchMovies: async (query: string, page: number = 1) => {
-    return apiClient.get(`/api/movies/search?query=${query}&page=${page}`);
+  searchMovies: async (query: string, page: number = 1, isAdvancedSearch: boolean = false) => {
+    return apiClient.get(`/api/movies/search?query=${query}&page=${page}&isAdvancedSearch=${isAdvancedSearch}`);
   },
   getMovieDetails: async (movieId: number) => {
     return apiClient.get(`/api/movies/${movieId}`);

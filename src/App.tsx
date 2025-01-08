@@ -5,13 +5,14 @@ import { HomePage } from "@/pages/HomePage/pages/HomePage";
 import { Navbar } from "@/components/Navigation/Navbar";
 import { LoginPage } from "@/features/Auth/pages/LoginPage";
 import { SignUpPage } from "@/features/Auth/pages/SignUpPage";
-import { ProfilePage } from "@/pages/ProfilePage";
 import { MovieDetail } from "@/features/MovieDetails/pages/MovieDetail";
 import { SearchResult } from "@/features/Search/pages/SearchResult";
 import { NotFoundPage } from "@/pages/NotFoundPage";
 import { ForgotPassword } from "@/features/Auth/pages/ForgotPassword";
 import { MoviesPage } from "@/pages/MoviesPage/pages/MoviesPage";
 import Cookies from "js-cookie";
+import { ProfilePage } from "./features/Profile/pages/ProfilePage";
+import { ProfileRatingList } from "./features/Profile/pages/ProfileRatePage";
 
 // Layout component to include conditional Navbar
 const Layout = () => {
@@ -64,6 +65,14 @@ const router = createBrowserRouter([
         element: (
           <ProtectedRoute>
             <ProfilePage />
+          </ProtectedRoute>
+        )
+      },
+      {
+        path: "/profile/ratingList",
+        element: (
+          <ProtectedRoute>
+            <ProfileRatingList />
           </ProtectedRoute>
         )
       },

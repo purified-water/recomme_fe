@@ -1,11 +1,13 @@
 import { apiClient } from "./apiClient";
-import { UserProfile } from "@/types/UserProfileType";
 
 export const userAPI = {
-  getProfile: async (userId: string) => {
-    return apiClient.get(`api/auth/user?userId=${userId}`);
+  getProfile: async () => {
+    return apiClient.get(`api/users/me`);
   },
-  editProfile: async (userId: string, data: UserProfile) => {
-    return apiClient.put(`/api/auth/update/user?userId=${userId}`, data);
+  editProfile: async () => {
+    return apiClient.put(`api/users/me`);
+  },
+  getMyRatingList: async () => {
+    return apiClient.get(`api/movies/rate`);
   }
 };
