@@ -13,6 +13,9 @@ import { MoviesPage } from "@/pages/MoviesPage/pages/MoviesPage";
 import Cookies from "js-cookie";
 import { ProfilePage } from "./features/Profile/pages/ProfilePage";
 import { ProfileRatingList } from "./features/Profile/pages/ProfileRatePage";
+import { ProfileWatchList } from "./features/Profile/pages/ProfileWatchListPage";
+import { CastPage } from "./pages/CastPage/CastPage";
+import CastProfile from "./pages/CastPage/CastProfile";
 
 // Layout component to include conditional Navbar
 const Layout = () => {
@@ -77,8 +80,24 @@ const router = createBrowserRouter([
         )
       },
       {
+        path: "/profile/watchList",
+        element: (
+          <ProtectedRoute>
+            <ProfileWatchList />
+          </ProtectedRoute>
+        )
+      },
+      {
         path: "/movies",
         element: <MoviesPage />
+      },
+      {
+        path: "/casts",
+        element: <CastPage />
+      },
+      {
+        path: "/casts/:castId",
+        element: <CastProfile />
       },
       {
         path: "/movie/:movieId",

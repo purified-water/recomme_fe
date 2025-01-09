@@ -135,7 +135,7 @@ export const Navbar = () => {
                     </li>
 
                     <li className="px-4 py-2 text-gray3 hover:opacity-70">
-                      <Link to="#">
+                      <Link to="/profile/ratingList">
                         <div className="flex items-center space-x-2">
                           <MdStarRate className="icon-lg icon-gray3" />
                           <span>Ratings</span>

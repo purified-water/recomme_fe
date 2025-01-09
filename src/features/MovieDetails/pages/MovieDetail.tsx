@@ -50,12 +50,14 @@ export const MovieDetail = () => {
     return <div>Loading...</div>;
   }
 
+    // Function to handle rating submission
   return (
     <div className="min-h-screen">
       {/* Rate Movie Modal */}
       {/* TO DO: ADD RATE MOVIE MODAL COMPONENT */}
       <RateMovieModal
         isOpen={isRatingModalOpen}
+        movieId={movieId}
         onClose={() => {
           setIsRatingModalOpen(false);
         }}
@@ -103,7 +105,7 @@ export const MovieDetail = () => {
             <div className="flex items-center gap-4 mt-4 text-white">
               <div className="flex items-center gap-2">
                 <div className="flex items-center justify-center w-12 h-12 text-sm font-bold text-white rounded-full bg-gradient-to-tr from-appPrimary to-purple-400">
-                  {movie?.vote_average.toFixed(1)}
+                  {movie?.vote_average}
                 </div>
                 <span className="text-sm font-medium">Average Rating</span>
 
@@ -152,7 +154,9 @@ export const MovieDetail = () => {
         </div>
 
         <div className="w-[30%]">
-          <RenderMoreDetail movie={movie} />
+          { movie &&
+            <RenderMoreDetail movie={movie} />
+          }
         </div>
       </div>
 

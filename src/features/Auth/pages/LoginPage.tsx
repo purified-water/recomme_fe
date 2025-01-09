@@ -38,7 +38,7 @@ export const LoginPage = () => {
 
   const fetchUserProfile = async (userId: string) => {
     try {
-      const response = await userAPI.getProfile(userId);
+      const response = await userAPI.getProfile();
       const userData = response.data;
       const { email, displayName, phoneNumber, photoUrl } = userData;
 
