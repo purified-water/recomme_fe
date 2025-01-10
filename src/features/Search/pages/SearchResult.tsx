@@ -10,6 +10,7 @@ import { SearchFilter } from "../components/SearchFilter";
 export const SearchResult = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const query = searchParams.get("query") || "";
+  const isAiSearch = searchParams.get("isAdvancedSearch") === "true";
   const currentPage = parseInt(searchParams.get("page") || "1", 10);
 
   const [results, setResults] = useState<Movie[]>([]);
@@ -22,7 +23,7 @@ export const SearchResult = () => {
   const fetchMovies = async () => {
     setIsLoading(true);
     try {
-      const response = await movieApi.searchMovies(query, currentPage);
+      const response = await movieApi.searchMovies(query, currentPage, isAiSearch);
       const data = response.data;
       // Normalize the data
       const movieList = data.result.results.map((movie: Movie) => ({

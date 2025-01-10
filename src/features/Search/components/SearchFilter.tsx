@@ -5,10 +5,10 @@ interface SearchFilterProps {
 }
 
 export const SearchFilter: React.FC<SearchFilterProps> = ({ updateResult }) => {
-  const [selectedFilter, setSelectedFilter] = useState("tvshows");
+  const [selectedFilter, setSelectedFilter] = useState("movies");
   const [filterList] = useState([
-    { value: "tvshows", label: "TV Shows" },
     { value: "movies", label: "Movies" },
+    { value: "tvshows", label: "TV Shows" },
     { value: "people", label: "People" },
     { value: "collections", label: "Collections" },
     { value: "companies", label: "Companies" }
