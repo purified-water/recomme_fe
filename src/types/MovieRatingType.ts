@@ -1,6 +1,5 @@
 export type Rating = {
-    movieId: string;
-    rating: number;
-    userId: string;
+  movieId: string;
+  rating: number;
+  userId: string;
 };
-  

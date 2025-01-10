@@ -50,7 +50,7 @@ export const MovieDetail = () => {
     return <div>Loading...</div>;
   }
 
-    // Function to handle rating submission
+  // Function to handle rating submission
   return (
     <div className="min-h-screen">
       {/* Rate Movie Modal */}
@@ -64,7 +64,7 @@ export const MovieDetail = () => {
       />
       <div className="relative">
         {/* Backdrop Image */}
-        <div className="min-h-[400px] max-h-[430px] overflow-hidden">
+        <div className="min-h-[300px] max-h-[420px] overflow-hidden">
           {movie?.backdrop_path ? (
             <img src={movie.backdrop_path} alt={movie.title} className="object-cover w-full h-full" />
           ) : (
@@ -147,17 +147,14 @@ export const MovieDetail = () => {
           </div>
         </div>
       </div>
-      <div id="more_detail" className="flex gap-x-4">
+
+      <div id="more_detail" className="flex mt-8 gap-x-4">
         <div className="w-[70%] ">
-          <RenderCast />
+          <RenderCast casts={movie?.credits.cast || []} />
           <RenderReviews />
         </div>
 
-        <div className="w-[30%]">
-          { movie &&
-            <RenderMoreDetail movie={movie} />
-          }
-        </div>
+        <div className="w-[30%]">{movie && <RenderMoreDetail movie={movie} />}</div>
       </div>
 
       <AppFooter />

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Separator } from "@/components/ui/separator";
 
 interface FilterSectionProps {
@@ -12,6 +12,14 @@ export const FilterSection: React.FC<FilterSectionProps> = ({ onSearch }) => {
     { value: "movies", label: "Movies" },
     { value: "tv", label: "TV Shows" }
   ]);
+  // FOR TESTING
+  useEffect(() => {
+    setSortByList((prev) => {
+      const newSortByList = [...prev];
+      newSortByList.unshift({ value: "relevance", label: "Relevance" });
+      return newSortByList;
+    });
+  }, []);
 
   const [releaseDates, setReleaseDates] = useState({ from: "", to: "" });
   const [genres, setGenres] = useState<string[]>([]);

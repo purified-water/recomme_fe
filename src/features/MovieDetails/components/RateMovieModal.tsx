@@ -14,9 +14,9 @@ export const RateMovieModal = ({ isOpen, onClose, movieId }: RatingModalProps) =
   const [rating, setRating] = useState(50);
 
   if (!isOpen) return null;
-  
+
   const handleSubmitRating = async () => {
-    await movieApi.rateMovie(movieId, rating/10);
+    await movieApi.rateMovie(movieId, rating / 10);
     onClose();
   };
 

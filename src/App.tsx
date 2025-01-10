@@ -14,7 +14,7 @@ import { ProfileRatingList } from "./features/Profile/pages/ProfileRatePage";
 import { ProfileWatchList } from "./features/Profile/pages/ProfileWatchListPage";
 import { CastPage } from "./pages/CastPage/CastPage";
 import CastProfile from "./pages/CastPage/CastProfile";
-import { Toaster } from "@/components/ui/toaster"
+import { Toaster } from "@/components/ui/toaster";
 
 // Layout component to include conditional Navbar
 const Layout = () => {

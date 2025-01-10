@@ -1,12 +1,8 @@
 import { useState } from "react";
-import { REGEXP_ONLY_DIGITS_AND_CHARS } from 'input-otp';
-import {
-  InputOTP,
-  InputOTPGroup,
-  InputOTPSlot,
-} from '@/components/ui/input-otp';
-import { useToast } from '@/hooks/use-toast';
-import { authAPI } from '@/lib/api';
+import { REGEXP_ONLY_DIGITS_AND_CHARS } from "input-otp";
+import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/components/ui/input-otp";
+import { useToast } from "@/hooks/use-toast";
+import { authAPI } from "@/lib/api";
 import { MdOutlineVisibility, MdOutlineVisibilityOff } from "rocketicons/md";
 import { useEffect } from "react";
 
@@ -62,7 +58,8 @@ export const ForgotPasswordPage = () => {
       setCountdown(45);
       toast({ description: "OTP sent successfully!" });
     } catch (error) {
-      alert('Error sending OTP.');
+      alert("Error sending OTP.");
+      console.log(error);
     }
   };
 
@@ -75,13 +72,17 @@ export const ForgotPasswordPage = () => {
     if (!inputValidation()) return;
 
     try {
-      const response = await authAPI.forgotPassword(forgotPasswordInfo.newPassword, forgotPasswordInfo.email, forgotPasswordInfo.otp);
+      const response = await authAPI.forgotPassword(
+        forgotPasswordInfo.newPassword,
+        forgotPasswordInfo.email,
+        forgotPasswordInfo.otp
+      );
 
       const data = await response;
       if (data.status === 200) {
         toast({
           title: "Password reset successfully!",
-          description: "Navigating to login page...",
+          description: "Navigating to login page..."
         });
         setTimeout(() => {
           window.location.href = "/login";
@@ -95,8 +96,9 @@ export const ForgotPasswordPage = () => {
     } catch (error) {
       toast({
         title: "Error",
-        description: "Could not reset password. Please try again.",
+        description: "Could not reset password. Please try again."
       });
+      console.log(error);
     }
   };
 
@@ -153,7 +155,9 @@ export const ForgotPasswordPage = () => {
             </div>
           </div>
           <div className="mb-4">
-            <label htmlFor="otp" className="block mb-1 text-sm font-bold text-gray-700">Enter OTP</label>
+            <label htmlFor="otp" className="block mb-1 text-sm font-bold text-gray-700">
+              Enter OTP
+            </label>
             <InputOTP
               maxLength={6}
               pattern={REGEXP_ONLY_DIGITS_AND_CHARS}
@@ -174,9 +178,9 @@ export const ForgotPasswordPage = () => {
               type="button"
               onClick={sendOTPRequest}
               disabled={countdown > 0}
-              className={`w-full py-2 font-semibold text-white transition rounded-lg ${countdown > 0 ? 'bg-gray-400' : 'bg-appPrimary hover:opacity-90'}`}
+              className={`w-full py-2 font-semibold text-white transition rounded-lg ${countdown > 0 ? "bg-gray-400" : "bg-appPrimary hover:opacity-90"}`}
             >
-              {countdown > 0 ? `Send OTP (${countdown}s)` : 'Send OTP'}
+              {countdown > 0 ? `Send OTP (${countdown}s)` : "Send OTP"}
             </button>
 
             <button
