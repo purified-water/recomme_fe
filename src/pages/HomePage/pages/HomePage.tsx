@@ -45,7 +45,7 @@ export const HomePage = () => {
         </div>
       </div>
 
-      <div className="flex mx-8 overflow-x-scroll h-80 gap-x-4">
+      <div className="flex mx-8 overflow-x-scroll h-80 gap-x-4 scrollbar-hide">
         <RenderTrendingMovies time_window={timeWindow} />
       </div>
 
@@ -57,7 +57,7 @@ export const HomePage = () => {
         </div>
       </div>
 
-      <div className="flex h-56 mx-8 overflow-x-scroll gap-x-4">
+      <div className="flex h-56 mx-8 overflow-x-scroll gap-x-4 scrollbar-hide">
         <RenderLatestTrailers trailerFilter={trailerFilter} />
       </div>
 
@@ -65,7 +65,7 @@ export const HomePage = () => {
         <div className="text-2xl font-bold text-appPrimary">Popular Movies</div>
       </div>
 
-      <div className="flex mx-8 overflow-x-scroll h-80 gap-x-4">
+      <div className="flex mx-8 overflow-x-scroll h-80 gap-x-4 scrollbar-hide">
         <RenderPopularMovies />
       </div>
 
