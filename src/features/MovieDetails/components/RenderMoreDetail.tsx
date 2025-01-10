@@ -6,6 +6,7 @@ interface MovieDetailProps {
   movie: MovieDetailType | undefined;
 }
 export const RenderMoreDetail = ({ movie }: MovieDetailProps) => {
+  console.log("Movie details:", movie);
   return (
     <div className="p-6 my-6">
       {/* Play Button and Streaming Info */}

@@ -12,5 +12,8 @@ export const movieApi = {
   },
   getMovieDetails: async (movieId: number) => {
     return apiClient.get(`/api/movies/${movieId}`);
+  },
+  rateMovie: async (movieId: string, rating: number) => {
+    return apiClient.post(`/api/movies/rate`, { movieId, rating });
   }
 };

@@ -2,19 +2,21 @@ import { useState } from "react";
 import { MdClose } from "rocketicons/md";
 import { ratingHintsEnum } from "../constants/RatingHintsEnum";
 import { Separator } from "@/components/ui/separator";
+import { movieApi } from "@/lib/api/movieApi";
 
 interface RatingModalProps {
   isOpen: boolean;
+  movieId: string;
   onClose: () => void;
 }
 
-export const RateMovieModal = ({ isOpen, onClose }: RatingModalProps) => {
+export const RateMovieModal = ({ isOpen, onClose, movieId }: RatingModalProps) => {
   const [rating, setRating] = useState(50);
 
   if (!isOpen) return null;
-
-  const handleSubmitRating = () => {
-    console.log("Rating submitted:", rating / 10);
+  
+  const handleSubmitRating = async () => {
+    await movieApi.rateMovie(movieId, rating/10);
     onClose();
   };
 

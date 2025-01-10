@@ -35,6 +35,6 @@ export type MovieDetailType = {
   tagline: string;
   title: string;
   video: boolean; // Defaults to true
-  vote_average: number; // Defaults to 0
+  vote_average: string; // Defaults to 0
   vote_count: number; // Defaults to 0
 };

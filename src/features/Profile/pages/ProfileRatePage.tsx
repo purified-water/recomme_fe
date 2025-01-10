@@ -5,6 +5,9 @@ import { useUserStore } from "@/stores/userStore";
 import { UserProfile } from "@/types/UserProfileType";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { MovieDetailType } from "@/types/MovieDetailType";
+import { normalizeMovieImage } from "@/utils/NormalizeMovieImage";
+import { Rating } from "@/types/MovieRatingType";
 
 const UNAVAILABLE_IMAGE = "/path/to/unavailable_image.jpg";
 
@@ -12,25 +15,26 @@ export const ProfileRatingList = () => {
     const [profile, setProfile] = useState<UserProfile | null>(null);
     const displayName = useUserStore((state) => state.displayName);
     const userId = localStorage.getItem("userId");
-    const [movieDetailsList, setMovieDetailsList] = useState<any[]>([]);
-
+    const [movieDetailsList, setMovieDetailsList] = useState<MovieDetailType[]>([]);
+    const [ratingList, setRatingList] = useState<Rating[]>([]);
     useEffect(() => {
         const fetchRatingList = async () => {
             try {
-                const response = await userAPI.getMyRatingList();
+                const response = await userAPI.getMyRatingList(localStorage.getItem("userId") || "");
                 const ratingList = await response.data.result;
                 console.log(ratingList);
+                setRatingList(ratingList);
                 // Fetch movie details for each movieId
-                const movieDetailsPromises = ratingList.map((rating: { movieId: number }) => {
-                    movieApi.getMovieDetails(rating.movieId);
-                    
-                    return 
+                const movieDetailsPromises = ratingList.map(async (rating: { movieId: number }) => {
+                    const response = await movieApi.getMovieDetails(rating.movieId);
+                    console.log(response.data.result);
+                    return response.data.result;
                 });
-            
-                const movieDetailsResponses = await Promise.all(movieDetailsPromises);
-                console.log(movieDetailsResponses);
-                const movies = movieDetailsResponses.map((res) => res.data);
-                setMovieDetailsList(movies);
+                const movieDetailsList = await Promise.all(movieDetailsPromises);
+                const fixImg = movieDetailsList.map(movie => {
+                    return normalizeMovieImage(movie);
+                });
+                setMovieDetailsList(fixImg);
             } catch (error) {
                 console.error("Error fetching movie details:", error);
             }
@@ -91,29 +95,41 @@ export const ProfileRatingList = () => {
                 <div className="text-2xl font-bold mb-4">My Ratings</div>
                 {movieDetailsList.length > 0 ? (
                     <div className="grid gap-4">
-                        {movieDetailsList.map((movie) => (
-                            <div
-                                key={movie.id}
-                                className="flex items-center w-full mb-4 bg-white border shadow-md h-36 rounded-xl shrink-0 hover:cursor-pointer gap-x-4"
-                            >
-                                <div className="relative w-24 h-full overflow-hidden rounded-lg">
-                                    <img
-                                        src={movie.backdrop_path || UNAVAILABLE_IMAGE}
-                                        alt={movie.title}
-                                        className="object-cover w-full h-full"
-                                    />
-                                </div>
-                                <div className="flex flex-col w-full h-full py-2 hover:cursor-default">
-                                    <Link to={`/movie/${movie.id}`}>
-                                        <h2 className="text-base font-semibold">{movie.title}</h2>
-                                    </Link>
-                                    <p className="text-base font-light text-gray-500">
-                                        {new Date(movie.release_date).toDateString()}
-                                    </p>
-                                    <div className="self-baseline line-clamp-2">{movie.overview}</div>
-                                </div>
-                            </div>
-                        ))}
+                        <div className="grid gap-4">
+                            {ratingList.map((rating) => {
+                                // Find the movie that matches the movieId in the rating
+                                const movie = movieDetailsList.find((m) => m.id.toString() === rating.movieId);
+                                if (!movie) return null; // Skip if movie details are not found
+
+                                return (
+                                    <div
+                                        key={movie.id}
+                                        className="flex items-center w-full mb-4 bg-white border shadow-md h-36 rounded-xl shrink-0 hover:cursor-pointer gap-x-4"
+                                    >
+                                        <div className="relative w-24 h-full overflow-hidden rounded-lg">
+                                            <img
+                                                src={movie.backdrop_path || UNAVAILABLE_IMAGE}
+                                                alt={movie.title}
+                                                className="object-cover w-full h-full"
+                                            />
+                                        </div>
+                                        <div className="flex flex-col w-full h-full py-2 hover:cursor-default">
+                                            <Link to={`/movie/${movie.id}`}>
+                                                <h2 className="text-base font-semibold">{movie.title}</h2>
+                                            </Link>
+                                            <p className="text-base font-light text-gray-500">
+                                                {new Date(movie.release_date).toDateString()}
+                                            </p>
+                                            <div className="self-baseline line-clamp-2">{movie.overview}</div>
+                                            <div className="text-lg text-gray-700">
+                                                <strong>Your Rating: {rating.rating || "N/A"}/10</strong> 
+                                            </div>
+                                        </div>
+                                    </div>
+                                );
+                            })}
+                        </div>
+
                     </div>
                 ) : (
                     <div className="mb-6">You haven't rated any movies.</div>
