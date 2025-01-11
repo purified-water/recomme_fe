@@ -9,7 +9,6 @@ export const ProfilePage = () => {
   const displayName = useUserStore((state) => state.displayName);
   const userId = localStorage.getItem("userId");
 
-
   useEffect(() => {
     if (!userId) {
       alert("User not found");

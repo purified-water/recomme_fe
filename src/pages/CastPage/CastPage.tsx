@@ -1,6 +1,6 @@
-import { SearchBar } from '@/features/Search/components/SearchBar';
-import { useState } from 'react';
-import { RenderFilteredCast } from './RenderFilteredCast';
+import { SearchBar } from "@/features/Search/components/SearchBar";
+import { useState } from "react";
+import { RenderFilteredCast } from "./RenderFilteredCast";
 
 export const CastPage = () => {
   const [currentPage, setCurrentPage] = useState(1);

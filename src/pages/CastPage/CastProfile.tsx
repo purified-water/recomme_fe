@@ -40,10 +40,11 @@ const CastProfile: React.FC = () => {
   if (!cast) {
     return <div>Cast not found</div>;
   }
-  type credits{
+  type MovieCredits = {
     cast: Movie[];
-    crew: Movie[];
+    crew: Movie[]; 
   }
+
   const {
     adult,
     biography,
@@ -56,7 +57,7 @@ const CastProfile: React.FC = () => {
     birthday,
     tmdb_id,
     known_for_department,
-    movie_credits,
+    movie_credits: MovieCredits,
   } = cast;
 
 
@@ -71,7 +72,7 @@ const CastProfile: React.FC = () => {
         {/* Profile Image */}
         <div className="flex-shrink-0">
           <img
-            src={profile_path ? `https://image.tmdb.org/t/p/w500${profile_path}` : '/path/to/default-profile.jpg'}
+            src={profile_path ? `https://image.tmdb.org/t/p/w500${profile_path}` : "/path/to/default-profile.jpg"}
             alt={name}
             className="w-80 h-auto rounded-lg shadow-lg"
           />

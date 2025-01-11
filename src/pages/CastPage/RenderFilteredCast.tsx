@@ -1,8 +1,8 @@
-import { castApi } from '@/lib/api/castApi';
-import { Cast } from '@/types/CastType';
-import { useEffect, useState } from 'react';
-import { CastCard } from './CastCard';
-import { RenderPagination } from '@/features/Search/components/RenderPagination';
+import { castApi } from "@/lib/api/castApi";
+import { Cast } from "@/types/CastType";
+import { useEffect, useState } from "react";
+import { CastCard } from "./CastCard";
+import { RenderPagination } from "@/features/Search/components/RenderPagination";
 
 interface RenderFilteredCastProps {
   currentPage: number;
@@ -22,7 +22,7 @@ export const RenderFilteredCast = ({ currentPage, onPageChange }: RenderFiltered
       setCast(data.results);
       setTotalPages(data.total_pages);
     } catch (error) {
-      console.error('Error fetching cast:', error);
+      console.error("Error fetching cast:", error);
     } finally {
       setIsLoading(false);
     }
@@ -44,11 +44,7 @@ export const RenderFilteredCast = ({ currentPage, onPageChange }: RenderFiltered
         ))}
       </div>
       <div className="mt-4">
-        <RenderPagination
-          currentPage={currentPage}
-          totalPages={totalPages}
-          onPageChange={onPageChange}
-        />
+        <RenderPagination currentPage={currentPage} totalPages={totalPages} onPageChange={onPageChange} />
       </div>
     </div>
   );

@@ -15,5 +15,5 @@ export const userAPI = {
   },
   getMyFavList: async () => {
     return apiClient.get(`/api/movies/favorites`);
-  },
+  }
 };
