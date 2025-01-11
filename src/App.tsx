@@ -14,6 +14,7 @@ import { ProfileRatingList } from "./features/Profile/pages/ProfileRatePage";
 import { ProfileWatchList } from "./features/Profile/pages/ProfileWatchListPage";
 import { CastPage } from "./pages/CastPage/CastPage";
 import CastProfile from "./pages/CastPage/CastProfile";
+import { ProfileFavouriteList } from "./features/Profile/pages/ProfileFavouritePage";
 import { Toaster } from "@/components/ui/toaster";
 
 // Layout component to include conditional Navbar
@@ -87,6 +88,14 @@ const router = createBrowserRouter([
         element: (
           <ProtectedRoute>
             <ProfileWatchList />
+          </ProtectedRoute>
+        )
+      },
+      {
+        path: "/profile/favouriteList",
+        element: (
+          <ProtectedRoute>
+            <ProfileFavouriteList />
           </ProtectedRoute>
         )
       },

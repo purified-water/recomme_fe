@@ -126,10 +126,10 @@ export const Navbar = () => {
                     </li>
 
                     <li className="px-4 py-2 text-gray3 hover:opacity-70">
-                      <Link to="#">
+                      <Link to="/profile/favouriteList">
                         <div className="flex items-center space-x-2">
                           <TbBook className="icon-lg icon-gray3" />
-                          <span>Lists</span>
+                          <span>Favourite Lists</span>
                         </div>
                       </Link>
                     </li>
@@ -144,7 +144,7 @@ export const Navbar = () => {
                     </li>
 
                     <li className="px-4 py-2 text-gray3 hover:opacity-70">
-                      <Link to="#">
+                      <Link to="/profile/watchlist">
                         <div className="flex items-center space-x-2">
                           <MdMovie className="icon-lg icon-gray3" />
                           <span>Watchlist</span>
