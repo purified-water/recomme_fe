@@ -1,22 +1,20 @@
-import { FilterSection } from "../MoviesPage/components/FilterSections";
-import { RenderFilteredCast } from "./RenderFilteredCast";
+import { SearchBar } from '@/features/Search/components/SearchBar';
+import { useState } from 'react';
+import { RenderFilteredCast } from './RenderFilteredCast';
 
 export const CastPage = () => {
-  const handleSearch = (filters: any) => {
-    console.log(filters);
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
   };
 
   return (
-    <div className="w-full min-h-screen p-8 bg-gray-100">
-      <div className="text-2xl font-bold text-appPrimary">All Cast</div>
-      <div id="content" className="flex mt-4 gap-x-6">
-        <div className="flex-col w-1/5 filter-bar">
-          <FilterSection onSearch={handleSearch} />
-        </div>
-
-        <div className="w-4/5">
-          <RenderFilteredCast />
-        </div>
+    <div className="min-h-screen bg-gray-100">
+      <SearchBar />
+      <div className="mx-6 mb-4 text-2xl font-bold text-appPrimary">Cast Members</div>
+      <div className="mx-8">
+        <RenderFilteredCast currentPage={currentPage} onPageChange={handlePageChange} />
       </div>
     </div>
   );
