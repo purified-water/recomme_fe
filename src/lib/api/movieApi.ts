@@ -42,5 +42,8 @@ export const movieApi = {
   },
   removeMovieFromFavorites: async (movieIds: string[]) => {
     return apiClient.delete(`/api/movies/favorites`, { data: { movieIds } });
+  },
+  getMovieTrailers: async () => {
+    return apiClient.get(`/api/movies/latestTrailers`);
   }
 };

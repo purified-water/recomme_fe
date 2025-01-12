@@ -82,7 +82,7 @@ export const ProfilePage = () => {
           <ul className="pl-5 list-disc text-gray-700">
             {searchHistory.map((history, index) => (
               <li key={index} className="mb-2">
-                <span className="font-medium">{history.query}</span> 
+                <span className="font-medium">{history.query}</span>
                 <span className="text-gray-500"> at {formatDateTime(history.time)}</span>
               </li>
             ))}

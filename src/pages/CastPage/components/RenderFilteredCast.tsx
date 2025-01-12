@@ -1,8 +1,9 @@
 import { castApi } from "@/lib/api/castApi";
 import { Cast } from "@/types/CastType";
 import { useEffect, useState } from "react";
-import { CastCard } from "./CastCard";
+import { CastCard } from "../pages/CastCard";
 import { RenderPagination } from "@/features/Search/components/RenderPagination";
+import { AppFooter } from "@/components/AppFooter";
 
 interface RenderFilteredCastProps {
   currentPage: number;
@@ -37,8 +38,8 @@ export const RenderFilteredCast = ({ currentPage, onPageChange }: RenderFiltered
   }
 
   return (
-    <div>
-      <div className="flex flex-wrap gap-y-4 gap-x-6">
+    <>
+      <div className="flex flex-wrap justify-center gap-y-4 gap-x-6">
         {cast.map((castMember, index) => (
           <CastCard cast={castMember} key={index} />
         ))}
@@ -46,6 +47,7 @@ export const RenderFilteredCast = ({ currentPage, onPageChange }: RenderFiltered
       <div className="mt-4 mb-4">
         <RenderPagination currentPage={currentPage} totalPages={totalPages} onPageChange={onPageChange} />
       </div>
-    </div>
+      <AppFooter />
+    </>
   );
 };

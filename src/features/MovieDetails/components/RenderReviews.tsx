@@ -1,7 +1,9 @@
+import React, { useEffect, useState } from "react";
 import UNAVAILABLE_IMAGE from "@/assets/UNAVAILABLE_IMAGE.jpg";
 import { movieApi } from "@/lib/api/movieApi";
 import { getUserIdFromLocalStorage } from "@/utils/UserLocalStorage";
 import { formatDateTime } from "@/utils/FormatDateTime";
+import { useToast } from "@/hooks/use-toast";
 
 interface Review {
   author: string;
@@ -14,10 +16,11 @@ interface RenderReviewsProps {
 }
 
 export const RenderReviews: React.FC<RenderReviewsProps> = ({ movieId }) => {
+  const { toast } = useToast();
   const [reviews, setReviews] = useState<Review[]>([]);
   const [newReview, setNewReview] = useState<string>("");
   const [isPosting, setIsPosting] = useState<boolean>(false);
-  const user = getUserIdFromLocalStorage();
+  const userId = getUserIdFromLocalStorage();
 
   // Fetch reviews from API
   const fetchReviews = async () => {
@@ -31,13 +34,20 @@ export const RenderReviews: React.FC<RenderReviewsProps> = ({ movieId }) => {
 
   // Post a new review
   const handlePostReview = async () => {
+    if (!userId) {
+      toast({
+        variant: "destructive",
+        description: "Please login to post a review"
+      });
+      return;
+    }
     if (!newReview.trim()) return; // Prevent posting empty reviews
     setIsPosting(true);
     try {
       // Mock API request to post a review
       await movieApi.postReviewByMovieId(movieId!, {
-        author: `User ${user}`, // Replace with authenticated user's name
-        content: newReview,
+        author: `User ${userId}`, // Replace with authenticated user's name
+        content: newReview
       });
 
       setNewReview(""); // Clear the input field
@@ -66,10 +76,7 @@ export const RenderReviews: React.FC<RenderReviewsProps> = ({ movieId }) => {
 
       <div className="p-4 bg-white rounded-lg shadow-md">
         {limitedReviews.map((review, index) => (
-          <div
-            key={index}
-            className="flex items-start pb-4 mb-6 space-x-4 border-b border-gray5 last:border-b-0"
-          >
+          <div key={index} className="flex items-start space-x-4 border-b border-gray5 last:border-b-0">
             {/* Avatar */}
             <div className="flex-shrink-0 w-12 h-12 overflow-hidden rounded-full">
               <img src={UNAVAILABLE_IMAGE} alt={review.author} className="object-cover w-full h-full" />
@@ -81,18 +88,16 @@ export const RenderReviews: React.FC<RenderReviewsProps> = ({ movieId }) => {
               <p className="text-sm text-gray-500">
                 Written by <span className="font-semibold">{review.author}</span> on {formatDateTime(review.time)}
               </p>
-              <p className="mt-2 text-sm text-gray2">
+              <p className="mt-2 text-sm text-gray2 line-clamp-3">
                 {review.content}
-                <span className="cursor-pointer text-appSecondary hover:underline"> read the rest</span>
+                {/* <span className="cursor-pointer text-appSecondary hover:underline"> read the rest</span> */}
               </p>
             </div>
           </div>
         ))}
       </div>
 
-      <div className="mt-4 text-lg cursor-pointer text-gray1 hover:text-gray1/80">
-        View all reviews
-      </div>
+      <div className="mt-4 text-lg cursor-pointer text-gray1 hover:text-gray1/80">View all reviews</div>
 
       {/* Input for Posting Review */}
       <div className="mt-6">
@@ -107,7 +112,7 @@ export const RenderReviews: React.FC<RenderReviewsProps> = ({ movieId }) => {
         <button
           onClick={handlePostReview}
           disabled={isPosting}
-          className="px-4 py-2 mt-2 text-white bg-appPrimary rounded-md hover:bg-appPrimary/90 disabled:bg-gray-400"
+          className="px-4 py-2 mt-2 text-white rounded-md bg-appPrimary hover:bg-appPrimary/90 disabled:bg-gray-400"
         >
           {isPosting ? "Posting..." : "Post Review"}
         </button>

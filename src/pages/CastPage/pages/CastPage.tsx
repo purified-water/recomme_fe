@@ -1,6 +1,5 @@
-import { SearchBar } from "@/features/Search/components/SearchBar";
 import { useState } from "react";
-import { RenderFilteredCast } from "./RenderFilteredCast";
+import { RenderFilteredCast } from "../components/RenderFilteredCast";
 
 export const CastPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -10,10 +9,9 @@ export const CastPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100">
-      <SearchBar />
+    <div className="min-h-screen pt-8 bg-gray-100">
       <div className="mx-6 mb-4 text-2xl font-bold text-appPrimary">Cast Members</div>
-      <div className="mx-8">
+      <div className="">
         <RenderFilteredCast currentPage={currentPage} onPageChange={handlePageChange} />
       </div>
     </div>

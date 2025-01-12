@@ -26,7 +26,7 @@ export const SearchResult = () => {
     try {
       const response = await movieApi.searchMovies(query, currentPage, isAiSearch);
       const data = response.data;
-      if (userId){
+      if (userId) {
         const saveSearchResponse = await movieApi.saveSearchHistory(query);
         console.log(saveSearchResponse);
       }
