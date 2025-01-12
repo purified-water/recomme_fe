@@ -1,15 +1,20 @@
 import UNAVAILABLE_IMAGE from "@/assets/unavailable_image.jpg";
 import { CastInMovieDetail } from "@/types/MovieDetailType";
 import { normalizeImagePath } from "@/utils/NormalizeMovieImage";
+import { useNavigate } from "react-router-dom";
 
 interface RenderCastProps {
   casts: CastInMovieDetail[];
 }
 
 export const RenderCast = ({ casts }: RenderCastProps) => {
-  // Normalize the image path
+  const navigate = useNavigate();
   const handleViewAllCast = () => {
     console.log("View all cast members");
+  };
+
+  const handleViewCastProfile = (castId: number) => {
+    navigate(`/casts/${castId}`);
   };
 
   return (
@@ -17,11 +22,15 @@ export const RenderCast = ({ casts }: RenderCastProps) => {
       <h2 className="mb-4 text-2xl font-bold">Series Cast</h2>
       <div className="flex pb-4 space-x-4 overflow-x-auto scrollbar-hide">
         {casts.map((cast, index) => (
-          <div key={index} className="min-w-[150px] max-w-[150px] rounded-lg shadow-md bg-white">
+          <div
+            key={index}
+            className="min-w-[150px] max-w-[150px] rounded-lg shadow-md bg-white cursor-pointer"
+            onClick={() => handleViewCastProfile(cast.id)}
+          >
             <img
               src={normalizeImagePath(cast.profile_path) || UNAVAILABLE_IMAGE}
               alt={cast.name}
-              className="w-full h-[200px] object-cover rounded-t-lg"
+              className="w-full h-[200px] object-cover rounded-t-lg cursor-pointer"
             />
             <div className="p-4">
               <h3 className="text-sm font-semibold line-clamp-2">{cast.name}</h3>

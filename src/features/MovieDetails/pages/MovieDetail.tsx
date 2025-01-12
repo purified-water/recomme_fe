@@ -14,7 +14,6 @@ import UNAVAILABLE_IMAGE from "@/assets/UNAVAILABLE_IMAGE.jpg";
 import { MovieCard } from "@/components/Movies/MovieCard";
 import { getUserIdFromLocalStorage } from "@/utils/UserLocalStorage";
 import { useToast } from "@/hooks/use-toast";
-import { userAPI } from "@/lib/api/userApi";
 
 export const MovieDetail = () => {
   const { movieId } = useParams<{ movieId: string }>();
@@ -31,15 +30,15 @@ export const MovieDetail = () => {
   }
 
   const handleRateMovie = () => {
-    if(userId) {
+    if (userId) {
       setIsRatingModalOpen(true);
     } else {
-      toast({ 
+      toast({
         variant: "destructive",
-        description: "Please login to rate the movie" 
+        description: "Please login to rate the movie"
       });
     }
-  }
+  };
 
   const fetchMovieDetails = async () => {
     setIsLoading(true);
@@ -49,7 +48,7 @@ export const MovieDetail = () => {
       const normalizedMovie = {
         ...data.result,
         poster_path: data.result.poster_path ? `${IMAGE_URL}${data.result.poster_path}` : null,
-        backdrop_path: data.result.backdrop_path ? `${IMAGE_URL}${data.result.backdrop_path}` : null,
+        backdrop_path: data.result.backdrop_path ? `${IMAGE_URL}${data.result.backdrop_path}` : null
       };
 
       setMovie(normalizedMovie);
@@ -67,10 +66,8 @@ export const MovieDetail = () => {
         id: item.id,
         title: item.title || "Unknown Title",
         release_date: item.release_date || "Unknown Date",
-        backdrop_path: item.backdrop_path
-          ? `${IMAGE_URL}${item.backdrop_path}`
-          : UNAVAILABLE_IMAGE,
-        vote_average: item.vote_average || 0,
+        backdrop_path: item.backdrop_path ? `${IMAGE_URL}${item.backdrop_path}` : UNAVAILABLE_IMAGE,
+        vote_average: item.vote_average || 0
       }));
       setRecommendedMovies(normalizedMovies);
     } catch (error) {
@@ -88,11 +85,7 @@ export const MovieDetail = () => {
 
   return (
     <div className="min-h-screen">
-      <RateMovieModal
-        isOpen={isRatingModalOpen}
-        movieId={movieId}
-        onClose={() => setIsRatingModalOpen(false)}
-      />
+      <RateMovieModal isOpen={isRatingModalOpen} movieId={movieId} onClose={() => setIsRatingModalOpen(false)} />
       <div className="relative">
         <div className="min-h-[300px] max-h-[420px] overflow-hidden">
           {movie?.backdrop_path ? (
@@ -169,7 +162,7 @@ export const MovieDetail = () => {
         </div>
         <div className="w-[30%]">{movie && <RenderMoreDetail movie={movie} />}</div>
       </div>
-      <div className="mt-12 px-12">
+      <div className="px-12 mt-12">
         <h2 className="text-xl font-bold text-gray-900">Relevant Films</h2>
         <div className="flex gap-4 mt-4 overflow-x-auto">
           {recommendedMovies.length > 0 ? (

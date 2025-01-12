@@ -11,7 +11,7 @@ export const CastCard: React.FC<CastCardProps> = ({ cast }) => {
   const { name, profile_path, gender } = cast;
 
   // Gender mapping
-  const genderString = gender === 1 ? "Male" : gender === 2 ? "Female" : "Unknown";
+  const genderString = gender === 1 ? "Female" : gender === 2 ? "Male" : "Unknown";
 
   return (
     <div className="relative flex flex-col items-center w-48 p-2 bg-white shadow-md h-72 rounded-xl shrink-0 hover:cursor-pointer">

@@ -48,7 +48,7 @@ export const ActionButtons = ({ movieId }: ActionButtonsProps) => {
     if (!userId) {
       toast({
         variant: "destructive",
-        description: "Please login to manage favorites",
+        description: "Please login to manage favorites"
       });
       return;
     }
@@ -65,8 +65,9 @@ export const ActionButtons = ({ movieId }: ActionButtonsProps) => {
     } catch (error) {
       toast({
         variant: "destructive",
-        description: "Error updating favorites",
+        description: "Error updating favorites"
       });
+      console.log(error);
     }
   };
 
@@ -74,7 +75,7 @@ export const ActionButtons = ({ movieId }: ActionButtonsProps) => {
     if (!userId) {
       toast({
         variant: "destructive",
-        description: "Please login to add to watchlist",
+        description: "Please login to add to watchlist"
       });
       return;
     }
@@ -90,8 +91,9 @@ export const ActionButtons = ({ movieId }: ActionButtonsProps) => {
     } catch (error) {
       toast({
         variant: "destructive",
-        description: "Error adding to watchlist",
+        description: "Error adding to watchlist"
       });
+      console.log(error);
     }
   };
 
@@ -100,8 +102,9 @@ export const ActionButtons = ({ movieId }: ActionButtonsProps) => {
       {/* Add to Favorite Button */}
       <div className="relative group">
         <button
-          className={`flex items-center justify-center w-10 h-10 rounded-full ${isFavorite ? "bg-appSecondary text-white" : "bg-gray-200"
-            }`}
+          className={`flex items-center justify-center w-10 h-10 rounded-full ${
+            isFavorite ? "bg-appSecondary text-white" : "bg-gray-200"
+          }`}
           title={isFavorite ? "Remove from favorite" : "Add to favorite"}
           onClick={handleToggleFavorite}
         >
@@ -115,16 +118,15 @@ export const ActionButtons = ({ movieId }: ActionButtonsProps) => {
       {/* Add to Watchlist Button */}
       <div className="relative group">
         <button
-          className={`flex items-center justify-center w-10 h-10 rounded-full ${isWatchlist ? "bg-appSecondary text-white" : "bg-gray-200"
-            }`}
+          className={`flex items-center justify-center w-10 h-10 rounded-full ${
+            isWatchlist ? "bg-appSecondary text-white" : "bg-gray-200"
+          }`}
           title="Add to watchlist"
           onClick={handleAddToWatchList}
         >
           <MdBookmark className={`w-6 h-6 ${isWatchlist ? "icon-white" : ""}`} />
         </button>
-        <div
-          className="absolute px-2 py-1 text-sm text-white transition-opacity transform -translate-x-1/2 bg-black rounded-lg opacity-0 w-fit bottom-12 left-1/2 group-hover:opacity-100 whitespace-nowrap"
-        >
+        <div className="absolute px-2 py-1 text-sm text-white transition-opacity transform -translate-x-1/2 bg-black rounded-lg opacity-0 w-fit bottom-12 left-1/2 group-hover:opacity-100 whitespace-nowrap">
           Add to watchlist
         </div>
       </div>
