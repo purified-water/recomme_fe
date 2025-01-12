@@ -8,10 +8,7 @@ export const SearchFilter: React.FC<SearchFilterProps> = ({ updateResult }) => {
   const [selectedFilter, setSelectedFilter] = useState("movies");
   const [filterList] = useState([
     { value: "movies", label: "Movies" },
-    { value: "tvshows", label: "TV Shows" },
     { value: "people", label: "People" },
-    { value: "collections", label: "Collections" },
-    { value: "companies", label: "Companies" }
   ]);
 
   const handleSelectFilter = (filter: string) => {
