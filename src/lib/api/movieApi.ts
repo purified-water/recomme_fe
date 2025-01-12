@@ -14,9 +14,21 @@ export const movieApi = {
     return apiClient.post(`/api/movies/save-search?query=${query}`);
   },
   getMovieDetails: async (movieId: number) => {
-    return apiClient.get(`/api/movies/${movieId}`);
+    return apiClient.get(`/api/movies/details/${movieId}`);
   },
   rateMovie: async (movieId: string, rating: number) => {
     return apiClient.post(`/api/movies/rate`, { movieId, rating });
+  },
+  addMovieToWatchlist: async (movieIds: string[]) => {
+    return apiClient.post(`/api/movies/watchList`, { movieIds });
+  },
+  removeMovieFromWatchlist: async (movieIds: string[]) => {
+    return apiClient.delete(`/api/movies/watchList`, { data: { movieIds } });
+  },
+  addMovieToFavorites: async (movieIds: string[]) => {
+    return apiClient.post(`/api/movies/favorites`, { movieIds });
+  },
+  removeMovieFromFavorites: async (movieIds: string[]) => {
+    return apiClient.delete(`/api/movies/favorites`, { data: { movieIds } });
   }
 };

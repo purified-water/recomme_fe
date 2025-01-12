@@ -81,8 +81,8 @@ export const ProfileFavouriteList = () => {
       </div>
 
       {/* Watchlist Section */}
-      <div className="container mx-auto px-4 py-6">
-        <div className="text-2xl font-bold mb-4">My Favourite List</div>
+      <div className="container px-4 py-6 mx-auto">
+        <div className="mb-4 text-2xl font-bold">My Favourite List</div>
         {favList.length > 0 ? (
           <div className="grid gap-4">
             {favList.map((movie) => (

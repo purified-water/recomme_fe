@@ -10,6 +10,9 @@ import { RateMovieModal } from "../components/RateMovieModal";
 import { RenderCast } from "../components/RenderCast";
 import { RenderReviews } from "../components/RenderReviews";
 import { RenderMoreDetail } from "../components/RenderMoreDetail";
+import { getUserIdFromLocalStorage } from "@/utils/UserLocalStorage";
+import { useToast } from "@/hooks/use-toast";
+import { userAPI } from "@/lib/api/userApi";
 
 export const MovieDetail = () => {
   const { movieId } = useParams<{ movieId: string }>();
@@ -17,9 +20,22 @@ export const MovieDetail = () => {
   const [isRatingModalOpen, setIsRatingModalOpen] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const IMAGE_URL = import.meta.env.VITE_TMDB_IMAGE_URL;
+  const userId = getUserIdFromLocalStorage();
+  const { toast } = useToast();
 
   if (!movieId) {
     return <div>Movie info not found</div>;
+  }
+
+  const handleRateMovie = () => {
+    if(userId) {
+      setIsRatingModalOpen(true);
+    } else {
+      toast({ 
+        variant: "destructive",
+        description: "Please login to rate the movie" 
+      });
+    }
   }
 
   const fetchMovieDetails = async () => {
@@ -54,7 +70,6 @@ export const MovieDetail = () => {
   return (
     <div className="min-h-screen">
       {/* Rate Movie Modal */}
-      {/* TO DO: ADD RATE MOVIE MODAL COMPONENT */}
       <RateMovieModal
         isOpen={isRatingModalOpen}
         movieId={movieId}
@@ -110,7 +125,7 @@ export const MovieDetail = () => {
                 <span className="text-sm font-medium">Average Rating</span>
 
                 <div
-                  onClick={() => setIsRatingModalOpen(true)}
+                  onClick={handleRateMovie}
                   className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-white rounded-md cursor-pointer bg-gray1 hover:bg-gray2/70"
                 >
                   <FaStar className="inline-block w-3 h-3 icon-white" />
@@ -121,7 +136,7 @@ export const MovieDetail = () => {
 
             {/* Action Icons */}
             <div className="flex items-center gap-4 mt-6">
-              <ActionButtons />
+              {movie?.id && <ActionButtons movieId={movie.id.toString()} />}
             </div>
 
             {/* Tagline */}

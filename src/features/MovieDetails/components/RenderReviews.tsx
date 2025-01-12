@@ -1,4 +1,3 @@
-import React from "react";
 import UNAVAILABLE_IMAGE from "@/assets/UNAVAILABLE_IMAGE.jpg";
 
 interface Review {
@@ -53,8 +52,7 @@ export const RenderReviews = () => {
       <h2 className="mb-4 text-2xl font-bold">Social</h2>
 
       <div className="flex items-center mb-6">
-        <button className="mr-4 text-lg font-semibold border-b-2 border-black">Reviews {reviews.length}</button>
-        <button className="text-lg text-gray4">Discussions 23</button>
+        <button className="mr-4 text-lg font-semibold border-b-2 border-black">Reviews</button>
       </div>
 
       <div className="p-4 bg-white rounded-lg shadow-md">
