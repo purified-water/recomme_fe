@@ -81,6 +81,13 @@ export const Navbar = () => {
               onClick={() => setIsMenuOpen(false)}
             >
               Movies
+            </Link>            
+            <Link
+              to="/casts"
+              className={`text-lg font-semibold transition-colors hover:text-appSecondary ${isActive("/casts")}`}
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Casts
             </Link>
             <Link
               to="/recommendation"

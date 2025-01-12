@@ -12,6 +12,6 @@ export type Movie = {
   popularity: number;
   release_date: string;
   video: boolean;
-  vote_average: number;
+  vote_average: string;
   vote_count: number;
 };

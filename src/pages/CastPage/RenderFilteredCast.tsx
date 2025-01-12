@@ -43,7 +43,7 @@ export const RenderFilteredCast = ({ currentPage, onPageChange }: RenderFiltered
           <CastCard cast={castMember} key={index} />
         ))}
       </div>
-      <div className="mt-4">
+      <div className="mt-4 mb-4">
         <RenderPagination currentPage={currentPage} totalPages={totalPages} onPageChange={onPageChange} />
       </div>
     </div>
