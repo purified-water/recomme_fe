@@ -83,6 +83,13 @@ export const Navbar = () => {
               Movies
             </Link>
             <Link
+              to="/casts"
+              className={`text-lg font-semibold transition-colors hover:text-appSecondary ${isActive("/casts")}`}
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Casts
+            </Link>
+            <Link
               to="/recommendation"
               className={`text-lg font-semibold transition-colors hover:text-appSecondary ${isActive("/recommend")}`}
               onClick={() => setIsMenuOpen(false)}
@@ -126,10 +133,10 @@ export const Navbar = () => {
                     </li>
 
                     <li className="px-4 py-2 text-gray3 hover:opacity-70">
-                      <Link to="#">
+                      <Link to="/profile/favouriteList">
                         <div className="flex items-center space-x-2">
                           <TbBook className="icon-lg icon-gray3" />
-                          <span>Lists</span>
+                          <span>Favourite Lists</span>
                         </div>
                       </Link>
                     </li>
@@ -144,7 +151,7 @@ export const Navbar = () => {
                     </li>
 
                     <li className="px-4 py-2 text-gray3 hover:opacity-70">
-                      <Link to="#">
+                      <Link to="/profile/watchlist">
                         <div className="flex items-center space-x-2">
                           <MdMovie className="icon-lg icon-gray3" />
                           <span>Watchlist</span>

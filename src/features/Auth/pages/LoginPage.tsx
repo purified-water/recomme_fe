@@ -36,7 +36,7 @@ export const LoginPage = () => {
     return isValid;
   };
 
-  const fetchUserProfile = async (userId: string) => {
+  const fetchUserProfile = async () => {
     try {
       const response = await userAPI.getProfile();
       const userData = response.data;
@@ -79,7 +79,7 @@ export const LoginPage = () => {
           throw new Error("User ID not found in token");
         }
         // Fetch user info and store in global state
-        await fetchUserProfile(userId);
+        await fetchUserProfile();
 
         localStorage.setItem("userId", userId);
         navigate("/");

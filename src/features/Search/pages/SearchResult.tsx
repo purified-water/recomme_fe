@@ -6,10 +6,12 @@ import { RenderPagination } from "../components/RenderPagination";
 import { movieApi } from "@/lib/api/movieApi";
 import { Movie } from "@/types/MovieType";
 import { SearchFilter } from "../components/SearchFilter";
+import { getUserIdFromLocalStorage } from "@/utils/UserLocalStorage";
 
 export const SearchResult = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const query = searchParams.get("query") || "";
+  const isAiSearch = searchParams.get("isAdvancedSearch") === "true";
   const currentPage = parseInt(searchParams.get("page") || "1", 10);
 
   const [results, setResults] = useState<Movie[]>([]);
@@ -17,13 +19,17 @@ export const SearchResult = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const IMAGE_URL = import.meta.env.VITE_TMDB_IMAGE_URL;
-
+  const userId = getUserIdFromLocalStorage();
   // Fetch movies from backend
   const fetchMovies = async () => {
     setIsLoading(true);
     try {
-      const response = await movieApi.searchMovies(query, currentPage);
+      const response = await movieApi.searchMovies(query, currentPage, isAiSearch);
       const data = response.data;
+      if (userId) {
+        const saveSearchResponse = await movieApi.saveSearchHistory(query);
+        console.log(saveSearchResponse);
+      }
       // Normalize the data
       const movieList = data.result.results.map((movie: Movie) => ({
         ...movie,

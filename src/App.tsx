@@ -3,19 +3,20 @@ import { createBrowserRouter, RouterProvider, Outlet, useLocation, Navigate } fr
 import "./App.css";
 import { HomePage } from "@/pages/HomePage/pages/HomePage";
 import { Navbar } from "@/components/Navigation/Navbar";
-import { LoginPage } from "@/features/Auth/pages/LoginPage";
-import { SignUpPage } from "@/features/Auth/pages/SignUpPage";
+import { LoginPage, SignUpPage, ForgotPasswordPage, ActivateAccountPage } from "./features/Auth/pages";
 import { MovieDetail } from "@/features/MovieDetails/pages/MovieDetail";
 import { SearchResult } from "@/features/Search/pages/SearchResult";
 import { NotFoundPage } from "@/pages/NotFoundPage";
-import { ForgotPassword } from "@/features/Auth/pages/ForgotPassword";
 import { MoviesPage } from "@/pages/MoviesPage/pages/MoviesPage";
 import Cookies from "js-cookie";
 import { ProfilePage } from "./features/Profile/pages/ProfilePage";
 import { ProfileRatingList } from "./features/Profile/pages/ProfileRatePage";
 import { ProfileWatchList } from "./features/Profile/pages/ProfileWatchListPage";
-import { CastPage } from "./pages/CastPage/CastPage";
-import CastProfile from "./pages/CastPage/CastProfile";
+import { CastPage } from "./pages/CastPage/pages/CastPage";
+import CastProfile from "./pages/CastPage/pages/CastProfile";
+import { ProfileFavouriteList } from "./features/Profile/pages/ProfileFavouritePage";
+import { Toaster } from "@/components/ui/toaster";
+import { RecommendPage } from "./pages/RecommendPage/Recommend";
 
 // Layout component to include conditional Navbar
 const Layout = () => {
@@ -61,7 +62,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/forgot-password",
-        element: <ForgotPassword />
+        element: <ForgotPasswordPage />
+      },
+      {
+        path: "/activate-account",
+        element: <ActivateAccountPage />
       },
       {
         path: "/profile",
@@ -88,6 +93,14 @@ const router = createBrowserRouter([
         )
       },
       {
+        path: "/profile/favouriteList",
+        element: (
+          <ProtectedRoute>
+            <ProfileFavouriteList />
+          </ProtectedRoute>
+        )
+      },
+      {
         path: "/movies",
         element: <MoviesPage />
       },
@@ -108,6 +121,10 @@ const router = createBrowserRouter([
         element: <SearchResult />
       },
       {
+        path: "/recommendation",
+        element: <RecommendPage />
+      },
+      {
         path: "/*",
         element: <NotFoundPage />
       }
@@ -119,6 +136,7 @@ function App() {
   return (
     <React.StrictMode>
       <RouterProvider router={router} />
+      <Toaster />
     </React.StrictMode>
   );
 }

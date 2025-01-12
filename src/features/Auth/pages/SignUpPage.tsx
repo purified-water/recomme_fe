@@ -70,7 +70,8 @@ export const SignUpPage = () => {
       const response = await authAPI.signUp(displayName, signUpInfo.email, signUpInfo.password);
 
       if (response.status === 201 || response.status === 200) {
-        navigate("/login");
+        // Redirect to activate account page
+        navigate(`/activate-account?email=${signUpInfo.email}`);
       } else {
         // TODO Handle errors
         setInputErrors({ ...inputErrors, username: "Unable to sign up" });

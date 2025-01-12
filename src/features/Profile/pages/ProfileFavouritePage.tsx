@@ -9,11 +9,11 @@ import { normalizeMovieImage } from "@/utils/NormalizeMovieImage";
 
 const UNAVAILABLE_IMAGE = "/path/to/unavailable_image.jpg";
 
-export const ProfileWatchList = () => {
+export const ProfileFavouriteList = () => {
   const [profile, setProfile] = useState<UserProfile | null>(null);
   const displayName = useUserStore((state) => state.displayName);
   const userId = localStorage.getItem("userId");
-  const [watchList, setWatchList] = useState<MovieDetailType[]>([]);
+  const [favList, setFavList] = useState<MovieDetailType[]>([]);
 
   useEffect(() => {
     if (!userId) {
@@ -38,19 +38,22 @@ export const ProfileWatchList = () => {
 
     const fetchWatchList = async () => {
       try {
-        const response = await userAPI.getMyWatchList(userId || "");
+        const response = await userAPI.getMyFavList();
         const watchList = await response.data.result;
         console.log(watchList);
         // Assuming the response already contains the complete movie details
         const fixedMovies = watchList.map((movie: MovieDetailType) => normalizeMovieImage(movie));
-        setWatchList(fixedMovies);
+        setFavList(fixedMovies);
       } catch (error) {
         console.error("Error fetching watchlist:", error);
       }
     };
+    const fetchData = async () => {
+      await fetchProfile();
+      await fetchWatchList();
+    };
 
-    fetchProfile();
-    fetchWatchList();
+    fetchData();
   }, [userId, displayName]);
 
   if (!profile) {
@@ -78,11 +81,11 @@ export const ProfileWatchList = () => {
       </div>
 
       {/* Watchlist Section */}
-      <div className="container mx-auto px-4 py-6">
-        <div className="text-2xl font-bold mb-4">My Watchlist</div>
-        {watchList.length > 0 ? (
+      <div className="container px-4 py-6 mx-auto">
+        <div className="mb-4 text-2xl font-bold">My Favourite List</div>
+        {favList.length > 0 ? (
           <div className="grid gap-4">
-            {watchList.map((movie) => (
+            {favList.map((movie) => (
               <div
                 key={movie.id}
                 className="flex items-center w-full mb-4 bg-white border shadow-md h-36 rounded-xl shrink-0 hover:cursor-pointer gap-x-4"

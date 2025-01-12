@@ -12,5 +12,11 @@ export const userAPI = {
   },
   getMyWatchList: async (userId: string) => {
     return apiClient.get(`/api/movies/watchList/${userId}`);
+  },
+  getMyFavList: async () => {
+    return apiClient.get(`/api/movies/favorites`);
+  },
+  getMySearchHistory: async () => {
+    return apiClient.get(`/api/movies/searchHistory`);
   }
 };

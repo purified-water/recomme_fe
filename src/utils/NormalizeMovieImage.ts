@@ -9,3 +9,9 @@ export const normalizeMovieImage = (movieData: MovieDetailType) => {
     backdrop_path: movieData.backdrop_path ? `${IMAGE_URL}${movieData.backdrop_path}` : ""
   };
 };
+
+export const normalizeImagePath = (imagePath: string) => {
+  const IMAGE_URL = import.meta.env.VITE_TMDB_IMAGE_URL;
+
+  return `${IMAGE_URL}${imagePath}`;
+};
