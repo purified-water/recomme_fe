@@ -5,6 +5,7 @@ export const HomeHeader = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [isAIEnabled, setIsAIEnabled] = useState(false);
   const navigate = useNavigate();
+  
   const handleSearch = () => {
     if (!searchQuery) return;
     if (isAIEnabled) {

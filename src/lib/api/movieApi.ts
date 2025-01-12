@@ -31,4 +31,16 @@ export const movieApi = {
   postReviewByMovieId: async (movieId: number, review: any) => {
     return apiClient.post(`/api/movies/${movieId.toString()}/reviews`, review);
   },
+  addMovieToWatchlist: async (movieIds: string[]) => {
+    return apiClient.post(`/api/movies/watchList`, { movieIds });
+  },
+  removeMovieFromWatchlist: async (movieIds: string[]) => {
+    return apiClient.delete(`/api/movies/watchList`, { data: { movieIds } });
+  },
+  addMovieToFavorites: async (movieIds: string[]) => {
+    return apiClient.post(`/api/movies/favorites`, { movieIds });
+  },
+  removeMovieFromFavorites: async (movieIds: string[]) => {
+    return apiClient.delete(`/api/movies/favorites`, { data: { movieIds } });
+  }
 };
