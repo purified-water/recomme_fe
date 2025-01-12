@@ -1,49 +1,58 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import UNAVAILABLE_IMAGE from "@/assets/UNAVAILABLE_IMAGE.jpg";
+import { movieApi } from "@/lib/api/movieApi";
+import { getUserIdFromLocalStorage } from "@/utils/UserLocalStorage";
+import { formatDateTime } from "@/utils/FormatDateTime";
 
 interface Review {
   author: string;
-  date: string;
-  title: string;
+  time: string;
   content: string;
 }
 
-const reviews: Review[] = [
-  {
-    author: "TheTenth",
-    date: "December 26, 2012",
-    title: "A review by TheTenth",
-    content:
-      "Extremely disappointing idea theft. So once there was 'The most dangerous game' (you see 'game' in the title?) where shipwrecked survivors are hunted by Count Zaroff and if they survive they're free. Then on the 'survive or win' we have Cube, Saw, Death race, Hunger games, Battle royale..."
-  },
-  {
-    author: "AnotherAuthor",
-    date: "January 10, 2015",
-    title: "A review by AnotherAuthor",
-    content:
-      "This is another review content to test the display functionality. It is a mock review added to demonstrate the three-review limit in this component..."
-  },
-  {
-    author: "SampleAuthor",
-    date: "March 14, 2020",
-    title: "A review by SampleAuthor",
-    content:
-      "Yet another review. This one is just a sample to test how the third review displays in the list of reviews..."
-  },
-  {
-    author: "FourthAuthor",
-    date: "June 20, 2023",
-    title: "A review by FourthAuthor",
-    content:
-      "This is the fourth review. It should not be displayed as we are limiting the reviews to three in this example..."
-  }
-  // Add more reviews if necessary
-];
+interface RenderReviewsProps {
+  movieId: number | undefined; // Pass movieId as a prop
+}
 
-export const RenderReviews = () => {
-  const handleViewAllReviews = () => {
-    console.log("View all reviews");
+export const RenderReviews: React.FC<RenderReviewsProps> = ({ movieId }) => {
+  const [reviews, setReviews] = useState<Review[]>([]);
+  const [newReview, setNewReview] = useState<string>("");
+  const [isPosting, setIsPosting] = useState<boolean>(false);
+  const user = getUserIdFromLocalStorage();
+
+  // Fetch reviews from API
+  const fetchReviews = async () => {
+    try {
+      const response = await movieApi.getReviewByMovieId(movieId!);
+      setReviews(response.data.result || []);
+    } catch (error) {
+      console.error("Error fetching reviews:", error);
+    }
   };
+
+  // Post a new review
+  const handlePostReview = async () => {
+    if (!newReview.trim()) return; // Prevent posting empty reviews
+    setIsPosting(true);
+    try {
+      // Mock API request to post a review
+      await movieApi.postReviewByMovieId(movieId!, {
+        author: `User ${user}`, // Replace with authenticated user's name
+        content: newReview,
+      });
+
+      setNewReview(""); // Clear the input field
+      fetchReviews(); // Refresh reviews
+    } catch (error) {
+      console.error("Error posting review:", error);
+    } finally {
+      setIsPosting(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchReviews();
+  }, [movieId]);
 
   // Limit reviews to three
   const limitedReviews = reviews.slice(0, 3);
@@ -53,13 +62,18 @@ export const RenderReviews = () => {
       <h2 className="mb-4 text-2xl font-bold">Social</h2>
 
       <div className="flex items-center mb-6">
-        <button className="mr-4 text-lg font-semibold border-b-2 border-black">Reviews {reviews.length}</button>
+        <button className="mr-4 text-lg font-semibold border-b-2 border-black">
+          Reviews {reviews.length}
+        </button>
         <button className="text-lg text-gray4">Discussions 23</button>
       </div>
 
       <div className="p-4 bg-white rounded-lg shadow-md">
         {limitedReviews.map((review, index) => (
-          <div key={index} className="flex items-start pb-4 mb-6 space-x-4 border-b border-gray5 last:border-b-0">
+          <div
+            key={index}
+            className="flex items-start pb-4 mb-6 space-x-4 border-b border-gray5 last:border-b-0"
+          >
             {/* Avatar */}
             <div className="flex-shrink-0 w-12 h-12 overflow-hidden rounded-full">
               <img src={UNAVAILABLE_IMAGE} alt={review.author} className="object-cover w-full h-full" />
@@ -67,9 +81,9 @@ export const RenderReviews = () => {
 
             {/* Review Content */}
             <div className="flex-1">
-              <h3 className="text-lg font-bold">{review.title}</h3>
+              <h3 className="text-lg font-bold">{review.author}</h3>
               <p className="text-sm text-gray-500">
-                Written by <span className="font-semibold">{review.author}</span> on {review.date}
+                Written by <span className="font-semibold">{review.author}</span> on {formatDateTime(review.time)}
               </p>
               <p className="mt-2 text-sm text-gray2">
                 {review.content}
@@ -79,8 +93,28 @@ export const RenderReviews = () => {
           </div>
         ))}
       </div>
-      <div onClick={handleViewAllReviews} className="mt-4 text-lg cursor-pointer text-gray1 hover:text-gray1/80">
+
+      <div className="mt-4 text-lg cursor-pointer text-gray1 hover:text-gray1/80">
         View all reviews
+      </div>
+
+      {/* Input for Posting Review */}
+      <div className="mt-6">
+        <h3 className="mb-2 text-lg font-bold">Write a Review</h3>
+        <textarea
+          value={newReview}
+          onChange={(e) => setNewReview(e.target.value)}
+          rows={4}
+          className="w-full p-2 border rounded-md focus:outline-none focus:ring focus:ring-appPrimary"
+          placeholder="Share your thoughts about this movie..."
+        ></textarea>
+        <button
+          onClick={handlePostReview}
+          disabled={isPosting}
+          className="px-4 py-2 mt-2 text-white bg-appPrimary rounded-md hover:bg-appPrimary/90 disabled:bg-gray-400"
+        >
+          {isPosting ? "Posting..." : "Post Review"}
+        </button>
       </div>
     </div>
   );

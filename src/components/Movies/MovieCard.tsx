@@ -4,14 +4,19 @@ import { Link, useNavigate } from "react-router-dom";
 import UNAVAILABLE_IMAGE from "@/assets/UNAVAILABLE_IMAGE.jpg";
 
 interface MovieCardProps {
-  movie: Movie;
+  movie?: Movie; // Made optional to handle undefined or null cases
 }
 
 export const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
   const navigate = useNavigate();
 
+  // If movie doesn't exist, return null or a placeholder
+  if (!movie) {
+    return <div className="w-48 h-72 p-2 bg-gray-200 rounded-xl">No movie data available</div>;
+  }
+
   const handleMovieClick = () => {
-    navigate(`/movie/${movie.id}`);
+    navigate(`/movie/${movie.id}`); // Updated to use `tmdb_id` as per the API response
   };
 
   return (
@@ -39,7 +44,7 @@ export const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
       </div>
 
       <div className="absolute flex items-center justify-center w-10 h-10 text-xs font-bold text-white bg-black border-2 rounded-full border-appMedium top-2 -bottom-3 left-3">
-        {movie.vote_average.toFixed(1)}
+        {parseFloat(movie.vote_average).toFixed(1)}
       </div>
     </div>
   );
