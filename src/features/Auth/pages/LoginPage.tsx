@@ -174,6 +174,12 @@ export const LoginPage = () => {
               Sign Up
             </a>
           </div>
+          <div className="mt-2 text-sm">
+            Activate your account{" "}
+            <a href="/activate-account" className="font-bold text-appPrimary hover:underline">
+              Activate account
+            </a>
+          </div>
         </div>
       </div>
     </div>

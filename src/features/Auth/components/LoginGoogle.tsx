@@ -11,9 +11,9 @@ import { userAPI } from "@/lib/api/userApi";
 const GoogleLogin = () => {
   const navigate = useNavigate();
 
-  const fetchUserProfile = async (userId: string) => {
+  const fetchUserProfile = async () => {
     try {
-      const response = await userAPI.getProfile(userId);
+      const response = await userAPI.getProfile();
       const userData = response.data;
       const { email, displayName, phoneNumber, photoUrl } = userData;
 
@@ -47,7 +47,7 @@ const GoogleLogin = () => {
           throw new Error("User id not found in token");
         }
         // Fetch user profile and store in zustand
-        await fetchUserProfile(userId);
+        await fetchUserProfile();
 
         localStorage.setItem("userId", userId);
 
