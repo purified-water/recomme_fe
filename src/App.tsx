@@ -16,7 +16,7 @@ import { CastPage } from "./pages/CastPage/pages/CastPage";
 import CastProfile from "./pages/CastPage/pages/CastProfile";
 import { ProfileFavouriteList } from "./features/Profile/pages/ProfileFavouritePage";
 import { Toaster } from "@/components/ui/toaster";
-import { RecommendPage } from "./pages/RecommendPage/Recommend";
+import { RecommendPage } from "./pages/RecommendPage/pages/RecommendationPage";
 
 // Layout component to include conditional Navbar
 const Layout = () => {

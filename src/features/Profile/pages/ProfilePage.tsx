@@ -40,6 +40,7 @@ export const ProfilePage = () => {
     const fetchSearchHistory = async () => {
       try {
         const response = await userAPI.getMySearchHistory();
+        console.log("Search history", response.data.result);
         setSearchHistory(response.data.result);
       } catch (error) {
         console.error("Error fetching search history:", error);
@@ -68,10 +69,10 @@ export const ProfilePage = () => {
           />
           <div>
             <p className="text-3xl font-semibold text-white">{profile.displayName || "N/A"}</p>
-            <p className="text-white mt-2">
+            <p className="mt-2 text-white">
               <strong className="font-semibold">UID:</strong> {profile.uid || "N/A"}
             </p>
-            <p className="text-base text-white mt-1">{profile.email || "N/A"}</p>
+            <p className="mt-1 text-base text-white">{profile.email || "N/A"}</p>
           </div>
         </div>
       </div>
@@ -79,11 +80,11 @@ export const ProfilePage = () => {
       <div className="px-6 mt-6">
         <h2 className="mb-4 text-xl font-semibold text-gray-800">Search History</h2>
         {searchHistory.length > 0 ? (
-          <ul className="pl-5 list-disc text-gray-700">
+          <ul className="px-8 py-4 overflow-y-auto text-gray-700 list-disc border rounded-lg h-96">
             {searchHistory.map((history, index) => (
               <li key={index} className="mb-2">
                 <span className="font-medium">{history.query}</span>
-                <span className="text-gray-500"> at {formatDateTime(history.time)}</span>
+                <span className="text-gray-500"> at {formatDateTime(history.timestamp)}</span>
               </li>
             ))}
           </ul>

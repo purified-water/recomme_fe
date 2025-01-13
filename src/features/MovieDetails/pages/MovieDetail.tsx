@@ -14,6 +14,7 @@ import UNAVAILABLE_IMAGE from "@/assets/UNAVAILABLE_IMAGE.jpg";
 import { MovieCard } from "@/components/Movies/MovieCard";
 import { getUserIdFromLocalStorage } from "@/utils/UserLocalStorage";
 import { useToast } from "@/hooks/use-toast";
+import { LoadingPage } from "@/features/Search/components/PageLoading";
 
 export const MovieDetail = () => {
   const { movieId } = useParams<{ movieId: string }>();
@@ -80,7 +81,7 @@ export const MovieDetail = () => {
   }, [movieId]);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <LoadingPage />;
   }
 
   return (

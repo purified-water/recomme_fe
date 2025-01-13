@@ -5,6 +5,7 @@ import { CastProfileType } from "../types/CastProfileType";
 import { NormalizeGender } from "@/utils/NormalizeGender";
 import { ActingCard } from "../components/ActingCard";
 import { useNavigate } from "react-router-dom";
+import { LoadingPage } from "@/features/Search/components/PageLoading";
 
 const CastProfile: React.FC = () => {
   const navigate = useNavigate();
@@ -39,7 +40,7 @@ const CastProfile: React.FC = () => {
   }, [castId]);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <LoadingPage />;
   }
 
   if (error) {

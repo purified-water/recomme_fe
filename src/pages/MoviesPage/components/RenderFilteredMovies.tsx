@@ -1,48 +1,24 @@
 import default_poster from "@/assets/Homepage/poster.jpg";
 import { MovieCard } from "@/components/Movies/MovieCard";
-import { useEffect, useState } from "react";
 import { Movie } from "@/types/MovieType";
-import { movieApi } from "@/lib/api/movieApi";
+import { normalizeImagePath } from "@/utils/NormalizeMovieImage";
 
-interface TrendingMoviesProps {
-  time_window: string;
+interface FilteredMoviesProps {
+  movies: Movie[];
 }
 
-export const RenderFilteredMovies = ({ time_window }: TrendingMoviesProps) => {
-  const IMAGE_URL = import.meta.env.VITE_TMDB_IMAGE_URL;
-  const [movies, setMovies] = useState<Movie[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
+export const RenderFilteredMovies = ({ movies }: FilteredMoviesProps) => {
 
-  const fetchTrendingMovies = async () => {
-    setIsLoading(true);
-    try {
-      const response = await movieApi.getTrendingMovies(time_window);
-      const data = response.data.result;
 
-      const movieList = data.results.map((movie: Movie) => ({
-        ...movie,
-        poster_path: movie.poster_path ? `${IMAGE_URL}${movie.poster_path}` : default_poster,
-        backdrop_path: movie.backdrop_path ? `${IMAGE_URL}${movie.backdrop_path}` : null
-      }));
-      setMovies(movieList);
-    } catch (error) {
-      console.error("Error fetching trending movies:", error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchTrendingMovies();
-  }, [time_window]);
-
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
+  const movieList = movies.map((movie: Movie) => ({
+    ...movie,
+    poster_path: normalizeImagePath(movie.poster_path) || default_poster,
+    backdrop_path: normalizeImagePath(movie.backdrop_path || "") || default_poster
+  }));
 
   return (
     <div className="flex flex-wrap gap-y-4 gap-x-6">
-      {movies.map((movie, index) => (
+      {movieList.map((movie, index) => (
         <>
           <MovieCard movie={movie} key={index} />
         </>

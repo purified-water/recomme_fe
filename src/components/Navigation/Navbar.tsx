@@ -1,7 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
-import { TbBook } from "rocketicons/tb";
-import { MdAccountCircle, MdClose, MdMenu, MdOutlinePerson, MdLogout, MdStarRate, MdMovie } from "rocketicons/md";
+import { MdAccountCircle, MdClose, MdMenu, MdOutlinePerson, MdLogout, MdStarRate, MdFavorite, MdBookmark } from "rocketicons/md";
 import Cookies from "js-cookie";
 import { useUserStore } from "@/stores/userStore";
 
@@ -68,9 +67,8 @@ export const Navbar = () => {
           </Link>
 
           <div
-            className={`fixed inset-0 z-40 flex flex-col items-center justify-center bg-white space-y-6 text-gray5 lg:static lg:flex lg:flex-row lg:space-y-0 lg:space-x-6 lg:bg-transparent lg:w-auto ${
-              isMenuOpen ? "flex" : "hidden"
-            }`}
+            className={`fixed inset-0 z-40 flex flex-col items-center justify-center bg-white space-y-6 text-gray5 lg:static lg:flex lg:flex-row lg:space-y-0 lg:space-x-6 lg:bg-transparent lg:w-auto ${isMenuOpen ? "flex" : "hidden"
+              }`}
           >
             <button onClick={() => setIsMenuOpen(false)} className="absolute top-3 right-3 lg:hidden">
               <MdClose className="icon-lg icon-gray3" />
@@ -91,7 +89,7 @@ export const Navbar = () => {
             </Link>
             <Link
               to="/recommendation"
-              className={`text-lg font-semibold transition-colors hover:text-appSecondary ${isActive("/recommend")}`}
+              className={`text-lg font-semibold transition-colors hover:text-appSecondary ${isActive("/recommendation")}`}
               onClick={() => setIsMenuOpen(false)}
             >
               Recommendation
@@ -135,7 +133,7 @@ export const Navbar = () => {
                     <li className="px-4 py-2 text-gray3 hover:opacity-70">
                       <Link to="/profile/favouriteList">
                         <div className="flex items-center space-x-2">
-                          <TbBook className="icon-lg icon-gray3" />
+                          <MdFavorite className="icon-lg icon-gray3" />
                           <span>Favourite Lists</span>
                         </div>
                       </Link>
@@ -153,7 +151,7 @@ export const Navbar = () => {
                     <li className="px-4 py-2 text-gray3 hover:opacity-70">
                       <Link to="/profile/watchlist">
                         <div className="flex items-center space-x-2">
-                          <MdMovie className="icon-lg icon-gray3" />
+                          <MdBookmark className="icon-lg icon-gray3" />
                           <span>Watchlist</span>
                         </div>
                       </Link>

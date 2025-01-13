@@ -11,6 +11,7 @@ export const normalizeMovieImage = (movieData: MovieDetailType) => {
 };
 
 export const normalizeImagePath = (imagePath: string) => {
+  if (!imagePath) return "";
   const IMAGE_URL = import.meta.env.VITE_TMDB_IMAGE_URL;
 
   return `${IMAGE_URL}${imagePath}`;

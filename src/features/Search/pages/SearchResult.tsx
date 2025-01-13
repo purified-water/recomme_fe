@@ -7,6 +7,7 @@ import { movieApi } from "@/lib/api/movieApi";
 import { Movie } from "@/types/MovieType";
 import { SearchFilter } from "../components/SearchFilter";
 import { getUserIdFromLocalStorage } from "@/utils/UserLocalStorage";
+import { LoadingPage } from "../components/PageLoading";
 
 export const SearchResult = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -57,7 +58,7 @@ export const SearchResult = () => {
 
   const RenderSearchMovies = () => {
     if (isLoading) {
-      return <div>Loading...</div>;
+      return <LoadingPage />;
     }
     if (results.length === 0) {
       return <div>No results found.</div>;
