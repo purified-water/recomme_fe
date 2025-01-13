@@ -1,82 +1,64 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Separator } from "@/components/ui/separator";
+import { genreApi } from "@/lib/api/genreApi";
+import { GenreType } from "@/types/GenreType";
 
 interface FilterSectionProps {
   onSearch: (filters: any) => void;
 }
 
 export const FilterSection: React.FC<FilterSectionProps> = ({ onSearch }) => {
-  const [selectedSortBy, setSelectedSortBy] = useState("");
-  const [sortByList, setSortByList] = useState([
-    { value: "everything", label: "Everything" },
-    { value: "movies", label: "Movies" },
-    { value: "tv", label: "TV Shows" }
-  ]);
-  // FOR TESTING
-  useEffect(() => {
-    setSortByList((prev) => {
-      const newSortByList = [...prev];
-      newSortByList.unshift({ value: "relevance", label: "Relevance" });
-      return newSortByList;
-    });
-  }, []);
-
   const [releaseDates, setReleaseDates] = useState({ from: "", to: "" });
-  const [genres, setGenres] = useState<string[]>([]);
+  const [genres, setGenres] = useState<GenreType[]>([]);
+  const [selectedGenres, setSelectedGenres] = useState<GenreType[]>([]);
   const [userScore, setUserScore] = useState([0, 10]);
 
-  const genreOptions = [
-    "Action",
-    "Adventure",
-    "Animation",
-    "Comedy",
-    "Crime",
-    "Documentary",
-    "Drama",
-    "Family",
-    "Fantasy",
-    "History",
-    "Horror",
-    "Music",
-    "Mystery",
-    "Romance",
-    "Science Fiction",
-    "TV Movie",
-    "Thriller",
-    "War",
-    "Western"
-  ];
+  const fetchGenres = async () => {
+    try {
+      const response = await genreApi.getAllGenres();
+      const data = response.data.result;
+      setGenres(data);
+    } catch (error) {
+      console.error("Error fetching genres:", error);
+    }
+  };
 
-  const handleGenreToggle = (genre: string) => {
-    setGenres((prev) => (prev.includes(genre) ? prev.filter((g) => g !== genre) : [...prev, genre]));
+  useEffect(() => {
+    fetchGenres();
+  }, []);
+
+  const handleGenreToggle = (genre: GenreType) => {
+    setSelectedGenres((prev) =>
+      prev.some((g) => g.id === genre.id)
+        ? prev.filter((g) => g.id !== genre.id)
+        : [...prev, genre]
+    );
   };
 
   const handleSearch = () => {
     onSearch({
-      selectedSortBy,
       releaseDates,
-      genres,
+      genres: selectedGenres,
       userScore
     });
   };
 
-  const genreItem = (genre: string) => {
-    return (
-      <div
-        key={genre}
-        onClick={() => handleGenreToggle(genre)}
-        className={`w-fit p-2 cursor-pointer rounded-xl text-sm ${
-          genres.includes(genre) ? "bg-appSecondary text-white" : "bg-gray6"
+  const genreItem = (genre: GenreType) => (
+    <div
+      key={genre.id}
+      onClick={() => handleGenreToggle(genre)}
+      className={`w-fit p-2 cursor-pointer rounded-xl text-sm ${selectedGenres.some((g) => g.id === genre.id)
+          ? "bg-appSecondary text-white"
+          : "bg-gray6"
         }`}
-      >
-        {genre}
-      </div>
-    );
-  };
+    >
+      {genre.name}
+    </div>
+  );
 
   return (
     <div id="filter-container" className="">
-      <div id="sort" className="p-4 bg-white rounded-lg shadow-md">
+      {/* <div id="sort" className="p-4 bg-white rounded-lg shadow-md">
         <h1 className="font-semibold">Sort</h1>
         <Separator orientation="horizontal" className="my-4" />
         <div className="mb-2 font-light">Sort results by</div>
@@ -91,16 +73,19 @@ export const FilterSection: React.FC<FilterSectionProps> = ({ onSearch }) => {
             </option>
           ))}
         </select>
-      </div>
+      </div> */}
 
       <div id="filter" className="p-4 mt-4 bg-white rounded-lg shadow-md">
         <h1 className="font-semibold">Filter</h1>
         <Separator orientation="horizontal" className="my-4" />
+
+        {/* Genre Selection */}
         <div className="mb-2 font-light">Filter by genres</div>
-        <div className="flex flex-wrap gap-4">{genreOptions.map(genreItem)}</div>
+        <div className="flex flex-wrap gap-4">{genres.map(genreItem)}</div>
 
         <Separator orientation="horizontal" className="my-4" />
 
+        {/* User Score Range */}
         <div className="mb-2 font-light">User score</div>
         <div className="flex gap-2">
           <input
@@ -139,25 +124,34 @@ export const FilterSection: React.FC<FilterSectionProps> = ({ onSearch }) => {
 
         <Separator orientation="horizontal" className="my-4" />
 
+        {/* Release Date */}
         <div className="mb-2 font-light">Release date</div>
         <div className="mb-2 text-sm font-light">From</div>
         <input
           type="date"
           value={releaseDates.from}
-          onChange={(e) => setReleaseDates({ ...releaseDates, from: e.target.value })}
+          onChange={(e) =>
+            setReleaseDates({ ...releaseDates, from: e.target.value })
+          }
           className="w-full h-10 p-2 bg-gray-100 rounded-lg"
         />
         <div className="mt-4 mb-2 text-sm font-light">To</div>
         <input
           type="date"
           value={releaseDates.to}
-          onChange={(e) => setReleaseDates({ ...releaseDates, to: e.target.value })}
+          onChange={(e) =>
+            setReleaseDates({ ...releaseDates, to: e.target.value })
+          }
           className="w-full h-10 p-2 bg-gray-100 rounded-lg"
         />
 
         <Separator orientation="horizontal" className="my-4" />
 
-        <button onClick={handleSearch} className="w-full h-10 text-white rounded-lg bg-appPrimary">
+        {/* Search Button */}
+        <button
+          onClick={handleSearch}
+          className="w-full h-10 text-white rounded-lg bg-appPrimary hover:bg-appSecondary"
+        >
           Search
         </button>
       </div>

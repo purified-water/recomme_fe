@@ -1,5 +1,4 @@
 import { Movie } from "@/types/MovieType";
-import { TbDots } from "rocketicons/tb";
 import { Link, useNavigate } from "react-router-dom";
 import UNAVAILABLE_IMAGE from "@/assets/UNAVAILABLE_IMAGE.jpg";
 
@@ -12,7 +11,7 @@ export const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
 
   // If movie doesn't exist, return null or a placeholder
   if (!movie) {
-    return <div className="w-48 h-72 p-2 bg-gray-200 rounded-xl">No movie data available</div>;
+    return <div className="w-48 p-2 bg-gray-200 h-72 rounded-xl">No movie data available</div>;
   }
 
   const handleMovieClick = () => {
@@ -28,12 +27,6 @@ export const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
           className="object-cover w-full h-full"
           onClick={handleMovieClick}
         />
-        <button
-          className="absolute z-10 p-1 bg-gray-800 bg-opacity-50 rounded-full top-2 right-2"
-          onClick={() => console.log("Add to Watchlist")}
-        >
-          <TbDots className="w-4 h-4 icon-white" />
-        </button>
       </div>
 
       <div className="flex flex-col w-full mt-2 h-1/6 hover:cursor-default">

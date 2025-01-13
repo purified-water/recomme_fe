@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { CastCard } from "../pages/CastCard";
 import { RenderPagination } from "@/features/Search/components/RenderPagination";
 import { AppFooter } from "@/components/AppFooter";
+import { LoadingPage } from "@/features/Search/components/PageLoading";
 
 interface RenderFilteredCastProps {
   currentPage: number;
@@ -34,7 +35,7 @@ export const RenderFilteredCast = ({ currentPage, onPageChange }: RenderFiltered
   }, [currentPage]);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <LoadingPage />;
   }
 
   return (

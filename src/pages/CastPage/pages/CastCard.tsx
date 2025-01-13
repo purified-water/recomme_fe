@@ -2,6 +2,7 @@ import React from "react";
 import { Cast } from "@/types/CastType"; // Cast Type
 import UNAVAILABLE_IMAGE from "@/assets/UNAVAILABLE_IMAGE.jpg";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 interface CastCardProps {
   cast: Cast;
@@ -9,13 +10,16 @@ interface CastCardProps {
 
 export const CastCard: React.FC<CastCardProps> = ({ cast }) => {
   const { name, profile_path, gender } = cast;
-
+  const navigate = useNavigate();
   // Gender mapping
   const genderString = gender === 1 ? "Female" : gender === 2 ? "Male" : "Unknown";
 
   return (
     <div className="relative flex flex-col items-center w-48 p-2 bg-white shadow-md h-72 rounded-xl shrink-0 hover:cursor-pointer">
-      <div className="relative w-full overflow-hidden rounded-t-lg h-5/6">
+      <div 
+      className="relative w-full overflow-hidden rounded-t-lg h-5/6"
+      onClick={() => navigate(`/casts/${cast.id}`)}
+      >
         <img
           src={profile_path ? `https://image.tmdb.org/t/p/w500${profile_path}` : UNAVAILABLE_IMAGE}
           alt={name}

@@ -1,6 +1,9 @@
 import { apiClient } from "./apiClient";
 
 export const movieApi = {
+  getAllMovies: async (page: number = 1, pageSize: number = 15) => {
+    return apiClient.get(`/api/movies?page=${page}&pageSize=${pageSize}`);
+  },
   getTrendingMovies: async (timeWindow: string, page: number = 1) => {
     return apiClient.get(`/api/movies/trending?timeWindow=${timeWindow}&page=${page}`);
   },
@@ -45,5 +48,18 @@ export const movieApi = {
   },
   getMovieTrailers: async () => {
     return apiClient.get(`/api/movies/latestTrailers`);
+  },
+  getMovieWithFilters: async (
+    genreIds: string[],
+    fromDate: string,
+    toDate: string,
+    fromScore: number,
+    toScore: number,
+    pageSize: number = 15,
+    page: number = 1
+  ) => {
+    return apiClient.get(
+      `/api/movies?genreIds=${genreIds.join(",")}&fromDate=${fromDate}&toDate=${toDate}&fromScore=${fromScore}&toScore=${toScore}&pageSize=${pageSize}&page=${page}`
+    );
   }
 };
