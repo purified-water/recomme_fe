@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Separator } from "@/components/ui/separator";
 import { genreApi } from "@/lib/api/genreApi";
 import { GenreType } from "@/types/GenreType";
+import { useToast } from "@/hooks/use-toast";
 
 interface FilterSectionProps {
   onSearch: (filters: any) => void;
@@ -12,6 +13,7 @@ export const FilterSection: React.FC<FilterSectionProps> = ({ onSearch }) => {
   const [genres, setGenres] = useState<GenreType[]>([]);
   const [selectedGenres, setSelectedGenres] = useState<GenreType[]>([]);
   const [userScore, setUserScore] = useState([0, 10]);
+  const { toast } = useToast();
 
   const fetchGenres = async () => {
     try {
@@ -29,13 +31,37 @@ export const FilterSection: React.FC<FilterSectionProps> = ({ onSearch }) => {
 
   const handleGenreToggle = (genre: GenreType) => {
     setSelectedGenres((prev) =>
-      prev.some((g) => g.id === genre.id)
-        ? prev.filter((g) => g.id !== genre.id)
-        : [...prev, genre]
+      prev.some((g) => g.id === genre.id) ? prev.filter((g) => g.id !== genre.id) : [...prev, genre]
     );
   };
 
+  const inputValidation = () => {
+    if (releaseDates.from && releaseDates.to) {
+      if (new Date(releaseDates.from) > new Date(releaseDates.to)) {
+        toast({
+          variant: "destructive",
+          description: "From date must be before to date"
+        });
+        return false;
+      }
+    } else if (releaseDates.from && !releaseDates.to) {
+      toast({
+        variant: "destructive",
+        description: "Please select a to date"
+      });
+      return false;
+    } else if (!releaseDates.from && releaseDates.to) {
+      toast({
+        variant: "destructive",
+        description: "Please select a from date"
+      });
+      return false;
+    }
+    return true;
+  };
+
   const handleSearch = () => {
+    if (!inputValidation()) return;
     onSearch({
       releaseDates,
       genres: selectedGenres,
@@ -47,10 +73,9 @@ export const FilterSection: React.FC<FilterSectionProps> = ({ onSearch }) => {
     <div
       key={genre.id}
       onClick={() => handleGenreToggle(genre)}
-      className={`w-fit p-2 cursor-pointer rounded-xl text-sm ${selectedGenres.some((g) => g.id === genre.id)
-          ? "bg-appSecondary text-white"
-          : "bg-gray6"
-        }`}
+      className={`w-fit p-2 cursor-pointer rounded-xl text-sm ${
+        selectedGenres.some((g) => g.id === genre.id) ? "bg-appSecondary text-white" : "bg-gray6"
+      }`}
     >
       {genre.name}
     </div>
@@ -130,18 +155,14 @@ export const FilterSection: React.FC<FilterSectionProps> = ({ onSearch }) => {
         <input
           type="date"
           value={releaseDates.from}
-          onChange={(e) =>
-            setReleaseDates({ ...releaseDates, from: e.target.value })
-          }
+          onChange={(e) => setReleaseDates({ ...releaseDates, from: e.target.value })}
           className="w-full h-10 p-2 bg-gray-100 rounded-lg"
         />
         <div className="mt-4 mb-2 text-sm font-light">To</div>
         <input
           type="date"
           value={releaseDates.to}
-          onChange={(e) =>
-            setReleaseDates({ ...releaseDates, to: e.target.value })
-          }
+          onChange={(e) => setReleaseDates({ ...releaseDates, to: e.target.value })}
           className="w-full h-10 p-2 bg-gray-100 rounded-lg"
         />
 
