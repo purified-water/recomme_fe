@@ -1,4 +1,5 @@
 import { apiClient } from "./apiClient";
+import {MoviesFilterRequestType} from "@/types/MoviesFilterRequestType.ts";
 
 export const movieApi = {
   getAllMovies: async (page: number = 1, pageSize: number = 15) => {
@@ -49,17 +50,17 @@ export const movieApi = {
   getMovieTrailers: async () => {
     return apiClient.get(`/api/movies/latestTrailers`);
   },
-  getMovieWithFilters: async (
-    genreIds: string[],
-    fromDate: string,
-    toDate: string,
-    fromScore: number,
-    toScore: number,
-    pageSize: number = 15,
-    page: number = 1
-  ) => {
-    return apiClient.get(
-      `/api/movies?genreIds=${genreIds.join(",")}&fromDate=${fromDate}&toDate=${toDate}&fromScore=${fromScore}&toScore=${toScore}&pageSize=${pageSize}&page=${page}`
-    );
+  getMovieWithFilters: async (request: MoviesFilterRequestType) => {
+    const params = {
+      genreIds: request.genreIds ? request.genreIds.join(",") : null,
+      objectIds: request.objectIds ? request.objectIds.join(",") : null,
+      fromDate: request.fromDate ?? null,
+      toDate: request.toDate ?? null,
+      fromScore: request.fromScore ?? 0,
+      toScore: request.toScore ?? 10,
+      pageSize: request.pageSize,
+      page: request.page,
+    };
+    return apiClient.get("/api/movies", { params });
   }
 };

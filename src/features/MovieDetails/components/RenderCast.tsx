@@ -20,7 +20,7 @@ export const RenderCast = ({ casts }: RenderCastProps) => {
   return (
     <div className="px-12 py-6 mt-6 mb-2">
       <h2 className="mb-4 text-2xl font-bold">Series Cast</h2>
-      <div className="flex pb-4 space-x-4 overflow-x-auto scrollbar-hide">
+      <div className="flex pb-4 space-x-4 overflow-x-auto custom-scrollbar">
         {casts.map((cast, index) => (
           <div
             key={index}

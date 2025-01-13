@@ -17,6 +17,7 @@ import CastProfile from "./pages/CastPage/pages/CastProfile";
 import { ProfileFavouriteList } from "./features/Profile/pages/ProfileFavouritePage";
 import { Toaster } from "@/components/ui/toaster";
 import { RecommendPage } from "./pages/RecommendPage/pages/RecommendationPage";
+import {AINavigationPage} from "@/pages/AINavigationPage/pages/AINavigationPage.tsx";
 
 // Layout component to include conditional Navbar
 const Layout = () => {
@@ -123,6 +124,10 @@ const router = createBrowserRouter([
       {
         path: "/recommendation",
         element: <RecommendPage />
+      },
+      {
+        path: "/aiNavigation",
+        element: <AINavigationPage />
       },
       {
         path: "/*",

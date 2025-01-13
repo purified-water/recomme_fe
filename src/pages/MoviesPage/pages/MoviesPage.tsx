@@ -7,6 +7,7 @@ import { useState, useEffect } from "react";
 import { RenderPagination } from "@/components/RenderPagination";
 import { useSearchParams } from "react-router-dom";
 import { FiltersType } from "../types/FiltersType";
+import {MoviesFilterRequestType} from "@/types/MoviesFilterRequestType.ts";
 
 export const MoviesPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -28,16 +29,19 @@ export const MoviesPage = () => {
         setMovies(data);
         return;
       } else {
-        console.log("Filters:", filters); // TO DO check lại filter
-        const response = await movieApi.getMovieWithFilters(
-          filters.genres.map((g) => g.id),
-          filters.releaseDates.from,
-          filters.releaseDates.to,
-          filters.userScore[0],
-          filters.userScore[1],
-          TOTAL_PAGE,
-          currentPage
-        );
+        console.log("Filters:", filters);
+        const request: MoviesFilterRequestType = {
+          genreIds: filters.genres.map((g) => g.id),
+          objectIds: null,
+          fromDate: filters.releaseDates.from,
+          toDate: filters.releaseDates.to,
+          fromScore: filters.userScore[0],
+          toScore: filters.userScore[1],
+          pageSize: TOTAL_PAGE,
+          page: currentPage
+        }
+        // TO DO check lại filter
+        const response = await movieApi.getMovieWithFilters(request);
         setSearchParams({ page: currentPage.toString() });
         setSearchParams({ genres: filters.genres.map((g) => g.id).join(",") });
         setSearchParams({ fromDate: filters.releaseDates.from });
