@@ -94,6 +94,13 @@ export const Navbar = () => {
             >
               Recommendation
             </Link>
+            <Link
+              to="/aiNavigation"
+              className={`text-lg font-semibold transition-colors hover:text-appSecondary ${isActive("/aiNavigation")}`}
+              onClick={() => setIsMenuOpen(false)}
+            >
+              AI Navigation
+            </Link>
           </div>
         </div>
 

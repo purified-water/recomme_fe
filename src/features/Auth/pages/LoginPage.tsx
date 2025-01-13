@@ -71,6 +71,11 @@ export const LoginPage = () => {
           sameSite: "Strict",
           expires: 1 / 24
         });
+        Cookies.set("refreshToken", response.data.refreshToken, {
+          secure: process.env.NODE_ENV === "production",
+          sameSite: "Strict",
+          expires: 1 / 24
+        });
 
         const decodedToken = jwtDecode<JwtPayload>(response.data.accessToken);
         const userId = decodedToken.sub;
