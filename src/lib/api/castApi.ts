@@ -6,5 +6,10 @@ export const castApi = {
   },
   getCastById: async (castId: string) => {
     return apiClient.get(`/api/casts/${castId}`);
+  },
+  search: async (searchTerm: string, isAdvanceSearch: boolean) => {
+    return apiClient.get(`/api/casts/search`, {
+      params: { searchTerm, isAdvanceSearch }
+    });
   }
 };

@@ -48,3 +48,12 @@ export default tseslint.config({
   },
 })
 ```
+
+```data for testing
+- AI Navigation: action (CAST_PAGE), moana (MOVIE_PAGE), casts of moana (CAST_PAGE), Moana 2 (SEARCH_PAGE), keanu reeves (SEARCH_PAGE)
+
+```
+
+
+
+
