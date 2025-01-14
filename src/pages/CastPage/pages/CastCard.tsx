@@ -16,10 +16,7 @@ export const CastCard: React.FC<CastCardProps> = ({ cast }) => {
 
   return (
     <div className="relative flex flex-col items-center w-48 p-2 bg-white shadow-md h-72 rounded-xl shrink-0 hover:cursor-pointer">
-      <div 
-      className="relative w-full overflow-hidden rounded-t-lg h-5/6"
-      onClick={() => navigate(`/casts/${cast.id}`)}
-      >
+      <div className="relative w-full overflow-hidden rounded-t-lg h-5/6" onClick={() => navigate(`/casts/${cast.id}`)}>
         <img
           src={profile_path ? `https://image.tmdb.org/t/p/w500${profile_path}` : UNAVAILABLE_IMAGE}
           alt={name}
