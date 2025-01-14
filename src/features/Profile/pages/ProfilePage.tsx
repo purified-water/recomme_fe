@@ -78,9 +78,9 @@ export const ProfilePage = () => {
       </div>
 
       <div className="px-6 mt-6">
-        <h2 className="mb-4 text-xl font-semibold text-gray-800">Search History</h2>
+        <h2 className="mb-4 text-xl font-semibold text-gray-800">Latest Search History</h2>
         {searchHistory.length > 0 ? (
-          <ul className="px-8 py-4 overflow-y-auto text-gray-700 list-disc border rounded-lg h-96">
+          <ul className="h-48 px-8 py-4 overflow-y-auto text-gray-700 list-disc border rounded-lg">
             {searchHistory.map((history, index) => (
               <li key={index} className="mb-2">
                 <span className="font-medium">{history.query}</span>

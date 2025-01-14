@@ -1,16 +1,25 @@
 import { useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import { getUserIdFromLocalStorage } from "@/utils/UserLocalStorage";
+import { movieApi } from "@/lib/api/movieApi";
 
 export const SearchBar = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-
+  const userId = getUserIdFromLocalStorage();
   const query = searchParams.get("query");
   const [searchQuery, setSearchQuery] = useState(query ? query : "");
   const [isAIEnabled, setIsAIEnabled] = useState(false);
 
-  const handleSearch = () => {
+  const handleSearch = async () => {
     if (!searchQuery) return;
+
+    // Only save once
+    if (userId) {
+      const saveSearchResponse = await movieApi.saveSearchHistory(searchQuery);
+      console.log(saveSearchResponse);
+    }
+
     if (isAIEnabled) {
       navigate(`/search?isAdvancedSearch=true&query=${searchQuery}`);
     } else {

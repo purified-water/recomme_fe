@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-import UNAVAILABLE_IMAGE from "@/assets/UNAVAILABLE_IMAGE.jpg";
+import UNAVAILABLE_IMAGE from "@/assets/unavailable_image.jpg";
 import { Cast } from "@/types/CastType.ts";
 
 interface CastCardProps {

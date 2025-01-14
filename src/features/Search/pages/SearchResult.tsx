@@ -6,7 +6,6 @@ import { RenderPagination } from "../components/RenderPagination";
 import { movieApi } from "@/lib/api/movieApi";
 import { Movie } from "@/types/MovieType";
 import { SearchFilter } from "../components/SearchFilter";
-import { getUserIdFromLocalStorage } from "@/utils/UserLocalStorage";
 import { LoadingPage } from "../components/PageLoading";
 import { Cast } from "@/types/CastType.ts";
 import { CastCardLong } from "@/features/Search/components/CastCardLong.tsx";
@@ -25,18 +24,13 @@ export const SearchResult = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const IMAGE_URL = import.meta.env.VITE_TMDB_IMAGE_URL;
-  const userId = getUserIdFromLocalStorage();
   // Fetch movies from backend
   const fetchMovies = async () => {
     setIsLoading(true);
     try {
       const response = await movieApi.searchMovies(query, currentPage, isAiSearch);
       const data = response.data;
-      console.log(data)
-      if (userId) {
-        const saveSearchResponse = await movieApi.saveSearchHistory(query);
-        console.log(saveSearchResponse);
-      }
+
       // Normalize the data
       const movieList = data.result.results.map((movie: Movie) => ({
         ...movie,
@@ -59,11 +53,7 @@ export const SearchResult = () => {
     try {
       const response = await castApi.search(query, isAiSearch);
       const data = response.data;
-      console.log(data);
-      if (userId) {
-        const saveSearchResponse = await movieApi.saveSearchHistory(query);
-        console.log(saveSearchResponse);
-      }
+
       // Normalize the data
       const castList = data.result.results.map((cast: Cast) => ({
         ...cast,
@@ -81,7 +71,6 @@ export const SearchResult = () => {
   };
 
   const updateResult = (filters: string) => {
-    console.log(filters);
     setSearchTab(filters);
   };
 
@@ -96,7 +85,7 @@ export const SearchResult = () => {
   }, [query, currentPage]);
 
   const RenderSearchMovies = () => {
-    console.log(movies)
+    console.log(movies);
     if (isLoading) {
       return <LoadingPage />;
     }
@@ -107,7 +96,7 @@ export const SearchResult = () => {
   };
 
   const RenderSearchCasts = () => {
-    console.log(casts)
+    console.log(casts);
     if (isLoading) {
       return <LoadingPage />;
     }
@@ -134,10 +123,11 @@ export const SearchResult = () => {
           <div className="flex-col w-4/5 min-h-screen filter-bar">
             <RenderSearchMovies />
           </div>
-        ) : (<div className="flex-col w-4/5 min-h-screen filter-bar">
+        ) : (
+          <div className="flex-col w-4/5 min-h-screen filter-bar">
             <RenderSearchCasts />
-          </div> )}
-
+          </div>
+        )}
       </div>
       <RenderPagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />
     </div>

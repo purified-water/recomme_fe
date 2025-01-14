@@ -10,7 +10,7 @@ import { RateMovieModal } from "../components/RateMovieModal";
 import { RenderCast } from "../components/RenderCast";
 import { RenderReviews } from "../components/RenderReviews";
 import { RenderMoreDetail } from "../components/RenderMoreDetail";
-import UNAVAILABLE_IMAGE from "@/assets/UNAVAILABLE_IMAGE.jpg";
+import UNAVAILABLE_IMAGE from "@/assets/unavailable_image.jpg";
 import { MovieCard } from "@/components/Movies/MovieCard";
 import { getUserIdFromLocalStorage } from "@/utils/UserLocalStorage";
 import { useToast } from "@/hooks/use-toast";

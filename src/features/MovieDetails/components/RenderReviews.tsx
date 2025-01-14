@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import UNAVAILABLE_IMAGE from "@/assets/UNAVAILABLE_IMAGE.jpg";
+import UNAVAILABLE_IMAGE from "@/assets/unavailable_image.jpg";
 import { movieApi } from "@/lib/api/movieApi";
 import { getUserIdFromLocalStorage } from "@/utils/UserLocalStorage";
 import { formatDateTime } from "@/utils/FormatDateTime";

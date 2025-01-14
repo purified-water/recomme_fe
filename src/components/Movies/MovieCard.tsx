@@ -1,6 +1,6 @@
 import { Movie } from "@/types/MovieType";
 import { Link, useNavigate } from "react-router-dom";
-import UNAVAILABLE_IMAGE from "@/assets/UNAVAILABLE_IMAGE.jpg";
+import UNAVAILABLE_IMAGE from "@/assets/unavailable_image.jpg";
 
 interface MovieCardProps {
   movie?: Movie; // Made optional to handle undefined or null cases

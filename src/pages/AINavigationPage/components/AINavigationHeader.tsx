@@ -138,7 +138,7 @@ export const AINavigationHeader = () => {
           onKeyDown={handleKeyDown}
         />
         <button
-          className="p-2 text-white transition-all duration-300 ease-in-out transform w-28 bg-gray1 hover:bg-gray-700 hover:scale-105"
+          className="p-2 text-white transition-all duration-300 ease-in-out transform rounded-r-lg w-28 bg-gray1 hover:bg-gray-700 hover:scale-105"
           onClick={handleSearch}
           disabled={isLoading}
         >

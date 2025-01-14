@@ -1,6 +1,6 @@
 import React from "react";
 import { Cast } from "@/types/CastType"; // Cast Type
-import UNAVAILABLE_IMAGE from "@/assets/UNAVAILABLE_IMAGE.jpg";
+import UNAVAILABLE_IMAGE from "@/assets/unavailable_image.jpg";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
