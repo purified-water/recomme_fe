@@ -19,7 +19,7 @@ export const RecommendPage = () => {
         return {
           ...movie,
           backdrop_path: normalizeImagePath(movie.backdrop_path || ""),
-          poster_path: normalizeImagePath(movie.poster_path || ""),
+          poster_path: normalizeImagePath(movie.poster_path || "")
         };
       });
 
@@ -47,9 +47,7 @@ export const RecommendPage = () => {
           </div>
           <div className="flex items-center">
             <div className="flex flex-wrap gap-6 pl-16 mt-6">
-              {recommendedMovies?.map((movie) => (
-                <MovieCard key={movie.id} movie={movie} />
-              ))}
+              {recommendedMovies?.map((movie) => <MovieCard key={movie.id} movie={movie} />)}
             </div>
           </div>
 

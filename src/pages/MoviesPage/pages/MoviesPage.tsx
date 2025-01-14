@@ -7,15 +7,15 @@ import { useState, useEffect } from "react";
 import { RenderPagination } from "@/components/RenderPagination";
 import { useSearchParams } from "react-router-dom";
 import { FiltersType } from "../types/FiltersType";
-import {MoviesFilterRequestType} from "@/types/MoviesFilterRequestType.ts";
 
 export const MoviesPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [movies, setMovies] = useState<Movie[]>([]);
   const currentPage = parseInt(searchParams.get("page") || "1", 10);
   const [filters, setFilters] = useState<FiltersType>();
+  const [totalPages, setTotalPages] = useState<number>(0);
   const TOTAL_PAGE = 15;
-  
+
   const handleSearch = (filters: FiltersType) => {
     setFilters(filters);
   };
@@ -27,31 +27,38 @@ export const MoviesPage = () => {
         const data = response.data.result.results;
 
         setMovies(data);
+        setTotalPages(response.data.result.results.length);
         return;
       } else {
         console.log("Filters:", filters);
-        const request: MoviesFilterRequestType = {
-          genreIds: filters.genres.map((g) => g.id),
-          objectIds: null,
-          fromDate: filters.releaseDates.from,
-          toDate: filters.releaseDates.to,
-          fromScore: filters.userScore[0],
-          toScore: filters.userScore[1],
+
+        const request = {
+          genreIds: filters.genres?.map((g) => g.id) || [],
+          fromDate: filters.releaseDates?.from || "",
+          toDate: filters.releaseDates?.to || "",
+          fromScore: filters.userScore ? filters.userScore[0] : null,
+          toScore: filters.userScore ? filters.userScore[1] : null,
           pageSize: TOTAL_PAGE,
           page: currentPage
-        }
-        // TO DO check lại filter
+        };
+
         const response = await movieApi.getMovieWithFilters(request);
-        setSearchParams({ page: currentPage.toString() });
-        setSearchParams({ genres: filters.genres.map((g) => g.id).join(",") });
-        setSearchParams({ fromDate: filters.releaseDates.from });
-        setSearchParams({ toDate: filters.releaseDates.to });
-        setSearchParams({ fromScore: filters.userScore[0].toString() });
-        setSearchParams({ toScore: filters.userScore[1].toString() });
+
+        setSearchParams({
+          page: currentPage.toString(),
+          ...(filters.genres?.length && { genres: filters.genres.map((g) => g.id).join(",") }),
+          ...(filters.releaseDates?.from && { fromDate: filters.releaseDates.from }),
+          ...(filters.releaseDates?.to && { toDate: filters.releaseDates.to }),
+          ...(filters.userScore && {
+            fromScore: filters.userScore[0].toString(),
+            toScore: filters.userScore[1].toString()
+          })
+        });
+
         const data = response.data.result.results;
 
-        // Ép kiểu từ movie detail sang movie type thôi
-
+        console.log("response:", response);
+        setTotalPages(response.data.result.results.length);
         setMovies(data);
       }
     } catch (error) {
@@ -65,6 +72,7 @@ export const MoviesPage = () => {
 
   useEffect(() => {
     fetchMoviesWithFilters();
+    console.log("Total Pages:", totalPages);
   }, [currentPage, filters]);
 
   return (
@@ -79,7 +87,7 @@ export const MoviesPage = () => {
           <RenderFilteredMovies movies={movies} />
         </div>
       </div>
-      <RenderPagination currentPage={currentPage} totalPages={TOTAL_PAGE} onPageChange={handlePageChange} />
+      <RenderPagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />
       <AppFooter />
     </div>
   );
