@@ -15,6 +15,7 @@ import { MovieCard } from "@/components/Movies/MovieCard";
 import { getUserIdFromLocalStorage } from "@/utils/UserLocalStorage";
 import { useToast } from "@/hooks/use-toast";
 import { LoadingPage } from "@/features/Search/components/PageLoading";
+import GRAY_BACKGROUND from "@/assets/gray_background.png";
 
 export const MovieDetail = () => {
   const { movieId } = useParams<{ movieId: string }>();
@@ -87,15 +88,19 @@ export const MovieDetail = () => {
   return (
     <div className="min-h-screen">
       <RateMovieModal isOpen={isRatingModalOpen} movieId={movieId} onClose={() => setIsRatingModalOpen(false)} />
-      <div className="relative">
+      <div id="backdrop" className="relative">
         <div className="min-h-[300px] max-h-[420px] overflow-hidden">
           {movie?.backdrop_path ? (
             <img src={movie.backdrop_path} alt={movie.title} className="object-cover w-full h-full" />
           ) : (
-            <div className="absolute inset-0 bg-gradient-to-t from-gray1 to-black" />
+            <img src={GRAY_BACKGROUND} alt="Unavailable" className="object-cover w-full h-full" />
           )}
         </div>
-        <div className="absolute top-0 flex flex-col items-center w-full gap-8 p-8 mx-auto bg-gradient-to-t from-gray3 via-gray2/80 to-gray2/90 lg:flex-row lg:items-start">
+
+        <div
+          id="title_card"
+          className="absolute top-0 flex flex-col items-center w-full gap-8 p-8 mx-auto bg-gradient-to-t from-gray1 via-gray2/80 to-gray2/90 lg:flex-row lg:items-start"
+        >
           <div className="w-64 overflow-hidden rounded-lg shadow-lg h-96">
             <img
               src={movie?.poster_path || UNAVAILABLE_IMAGE}
@@ -103,6 +108,7 @@ export const MovieDetail = () => {
               className="object-cover w-full h-full"
             />
           </div>
+
           <div className="flex-1 text-gray-800">
             <h1 className="text-3xl font-bold text-white">
               {movie?.title} <span className="text-2xl font-normal">({movie?.release_date.split("-")[0]})</span>

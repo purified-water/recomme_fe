@@ -6,4 +6,5 @@ export type MoviesFilterRequestType = {
   toScore: number | null;
   pageSize: number;
   page: number;
+  objectIds?: string[];
 };

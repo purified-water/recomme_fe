@@ -53,7 +53,7 @@ export const HomePage = () => {
         <RenderPopularMovies />
       </div>
       <div className="fixed bottom-20 right-20">
-      <AIChatBox />
+        <AIChatBox />
       </div>
       <AppFooter />
     </div>

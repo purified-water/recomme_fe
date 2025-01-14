@@ -1,4 +1,3 @@
-import { AppFooter } from "@/components/AppFooter.tsx";
 import { AINavigationHeader } from "@/pages/AINavigationPage/components/AINavigationHeader.tsx";
 
 export const AINavigationPage = () => {
@@ -10,8 +9,6 @@ export const AINavigationPage = () => {
         <div className="mt-4 text-2xl font-semibold text-center text-transparent text-gray1 bg-gradient-to-r from-appPrimary via-pink-500 to-purple-400 bg-clip-text">
           We will redirect you to the approriate page!
         </div>
-
-        <AppFooter />
       </div>
     </div>
   );

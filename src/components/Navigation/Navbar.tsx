@@ -97,13 +97,15 @@ export const Navbar = () => {
             >
               Casts
             </Link>
-            <Link
-              to="/recommendation"
-              className={`text-lg font-semibold transition-colors hover:text-appSecondary ${isActive("/recommendation")}`}
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Recommendation
-            </Link>
+            {isLoggedIn && (
+              <Link
+                to="/recommendation"
+                className={`text-lg font-semibold transition-colors hover:text-appSecondary ${isActive("/recommendation")}`}
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Recommendation
+              </Link>
+            )}
             <Link
               to="/aiNavigation"
               className={`text-lg font-semibold transition-colors hover:text-appSecondary ${isActive("/aiNavigation")}`}
