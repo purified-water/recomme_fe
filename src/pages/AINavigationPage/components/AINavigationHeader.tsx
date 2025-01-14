@@ -35,7 +35,9 @@ export const AINavigationHeader = () => {
     } catch (error: any) {
       toast({
         title: "Error",
-        description: `${error.response?.data?.message || "An unknown error occurred."}`,
+        description: error.response?.data?.message
+          ? "You have exceeded the number allowed to prompt in a short time, please try again later!"
+          : "An unknown error occurred.",
         type: "background"
       });
     } finally {
@@ -59,13 +61,10 @@ export const AINavigationHeader = () => {
       const response = await movieApi.getMovieWithFilters(request);
       const responseData = await response.data;
       const movies = responseData.result.results;
+      console.log(movies);
 
-      for (const movie of movies) {
-        if (regex.test(movie.original_title)) {
-          console.log("Navigating to:", `/movie/${movie.tmdb_id}`);
-          navigate(`/movie/${movie.tmdb_id}`);
-          return; // Exit after navigating
-        }
+      if (movies[0]) {
+        navigate(`/movie/${movies[0].tmdb_id}`);
       }
     } catch (error: any) {
       toast({
