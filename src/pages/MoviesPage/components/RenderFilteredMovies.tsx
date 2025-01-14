@@ -8,8 +8,6 @@ interface FilteredMoviesProps {
 }
 
 export const RenderFilteredMovies = ({ movies }: FilteredMoviesProps) => {
-
-
   const movieList = movies.map((movie: Movie) => ({
     ...movie,
     poster_path: normalizeImagePath(movie.poster_path) || default_poster,

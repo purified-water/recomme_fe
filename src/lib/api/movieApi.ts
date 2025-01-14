@@ -1,5 +1,5 @@
 import { apiClient } from "./apiClient";
-import {MoviesFilterRequestType} from "@/types/MoviesFilterRequestType.ts";
+import { MoviesFilterRequestType } from "@/types/MoviesFilterRequestType.ts";
 
 export const movieApi = {
   getAllMovies: async (page: number = 1, pageSize: number = 15) => {
@@ -51,16 +51,22 @@ export const movieApi = {
     return apiClient.get(`/api/movies/latestTrailers`);
   },
   getMovieWithFilters: async (request: MoviesFilterRequestType) => {
-    const params = {
-      genreIds: request.genreIds ? request.genreIds.join(",") : null,
-      objectIds: request.objectIds ? request.objectIds.join(",") : null,
-      fromDate: request.fromDate ?? null,
-      toDate: request.toDate ?? null,
-      fromScore: request.fromScore ?? 0,
-      toScore: request.toScore ?? 10,
+    const params = Object.entries({
+      genreIds: request.genreIds && request.genreIds.length > 0 ? request.genreIds.join(",") : [],
+      fromDate: request.fromDate,
+      toDate: request.toDate,
+      fromScore: request.fromScore,
+      toScore: request.toScore,
       pageSize: request.pageSize,
-      page: request.page,
-    };
+      page: request.page
+    }).reduce((acc: { [key: string]: any }, [key, value]) => {
+      if (value !== null && value !== undefined && value !== "") {
+        acc[key] = value;
+      }
+      return acc;
+    }, {});
+
+    console.log("Params:", params);
     return apiClient.get("/api/movies", { params });
   }
 };

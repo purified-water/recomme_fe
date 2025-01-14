@@ -5,7 +5,6 @@ import { useToast } from "@/hooks/use-toast.ts";
 import { movieApi } from "@/lib/api/movieApi.ts";
 import { MoviesFilterRequestType } from "@/types/MoviesFilterRequestType.ts";
 
-
 export const AINavigationHeader = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const regex = new RegExp(searchQuery, "i");
