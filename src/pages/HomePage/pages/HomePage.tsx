@@ -4,6 +4,7 @@ import { RenderLatestTrailers } from "../components/RenderLatestTrailers";
 import { AppFooter } from "@/components/AppFooter";
 import { useState } from "react";
 import { RenderPopularMovies } from "../components/RenderPopularMovies";
+import { AIChatBox } from "../components/AIChatBox";
 
 export const HomePage = () => {
   const [timeWindow, setTimeWindow] = useState("day");
@@ -51,7 +52,9 @@ export const HomePage = () => {
       <div className="flex mx-8 overflow-x-scroll h-80 gap-x-4 custom-scrollbar">
         <RenderPopularMovies />
       </div>
-
+      <div className="fixed bottom-20 right-20">
+      <AIChatBox />
+      </div>
       <AppFooter />
     </div>
   );
