@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { llmApi } from "@/lib/api/llmApi";
 import { MdRocket } from "rocketicons/md";
+import { formatResponse } from "@/utils/FormatChatBotResponse";
 
 export const AIChatBox = () => {
   const [query, setQuery] = useState("");
@@ -12,8 +13,11 @@ export const AIChatBox = () => {
     if (!query.trim()) return;
     setIsLoading(true);
     try {
-      const { data } = await llmApi.ask(query);
-      setResponse(data.result.data.result);
+      const response = await llmApi.ask(query);
+      const parsedResult = await JSON.parse(response.data.result);
+      const resultString = parsedResult.data.result;
+
+      setResponse(resultString);
       setQuery("");
     } catch (error) {
       console.error("Error fetching AI response:", error);
@@ -37,9 +41,11 @@ export const AIChatBox = () => {
       {isOpen && (
         <div className="flex flex-col h-full w-[500px] bg-white rounded shadow-lg">
           {/* Response Display */}
-          <div className="flex-grow p-3 overflow-auto text-gray-800 rounded-lg bg-gray-50">
-            <div className="text-sm">
-              <strong>AI:</strong> {isLoading ? "Loading..." : response || "How can I assist you today?"}
+          <div className="flex-grow p-3 overflow-auto text-gray-800 rounded-lg h-fit bg-gray-50">
+            <div className="flex-wrap h-24 overflow-y-scroll text-sm max-h-24">
+              <div>
+                <strong>AI:</strong> {isLoading ? "Loading..." : formatResponse(response) || "How can I assist you today?"}
+              </div>
             </div>
           </div>
 
