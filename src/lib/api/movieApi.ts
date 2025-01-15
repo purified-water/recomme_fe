@@ -52,7 +52,8 @@ export const movieApi = {
   },
   getMovieWithFilters: async (request: MoviesFilterRequestType) => {
     const params = Object.entries({
-      genreIds: request.genreIds && request.genreIds.length > 0 ? request.genreIds.join(",") : [],
+      genreIds: request.genreIds && request.genreIds.length > 0 ? request.genreIds.join(",") : "",
+      objectIds: request.objectIds && request.objectIds.length > 0 ? request.objectIds.join(",") : "",
       fromDate: request.fromDate,
       toDate: request.toDate,
       fromScore: request.fromScore,
